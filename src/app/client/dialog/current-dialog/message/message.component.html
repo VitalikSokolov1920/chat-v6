@@ -1,0 +1,29 @@
+<div class="dialog__item" *ngIf="message"
+     [ngClass]="{
+       'dialog__item_left': !isAuthUserSend,
+       'dialog__item_right': isAuthUserSend
+     }">
+  <div class="dialog__item_name"
+    [ngClass]="{
+      'dialog__item_name_left': !isAuthUserSend,
+      'dialog__item_name_right': isAuthUserSend
+    }">
+    {{sendFromUser.last_name}} {{sendFromUser.first_name}}
+  </div>
+  <img
+    [ngClass]="{
+      'dialog__item_image_left': !isAuthUserSend,
+      'dialog__item_image_right': isAuthUserSend
+    }"
+    alt="" [src]="getImageSrc(message.send_from_id)" class="dialog__item_image">
+  <div class="dialog__item_message">
+    {{message.message_text}}
+  </div>
+  <div class="dialog__item_date-send"
+       [ngClass]="{
+      'dialog__item_date-send_left': !isAuthUserSend,
+      'dialog__item_date-send_right': isAuthUserSend
+    }">
+    {{message.date_send | date:'shortTime'}}
+  </div>
+</div>
