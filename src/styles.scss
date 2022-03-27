@@ -1,1 +1,12 @@
-/* You can add global styles to this file, and also import other style files */
+@import '/src/variables.scss';
+
+* {
+  font-size: $font-size-medium;
+  margin: 0;
+  padding: 0;
+
+  color: $text-color;
+  background-color: $bg-color;
+
+  box-sizing: border-box;
+}
