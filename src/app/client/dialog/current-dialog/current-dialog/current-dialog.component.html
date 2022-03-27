@@ -1,0 +1,15 @@
+<div *ngIf="otherUser" class="user-info" [routerLink]="['/client/client-page', otherUser.id]">
+  {{fullName}}
+</div>
+<div class="dialog" *ngIf="dialog">
+  <app-message
+    *ngFor="let message of dialog"
+    [message]="message"
+    [sendFromUser]="message.send_from_id === authUser.id ? authUser : otherUser"
+    [isAuthUserSend]="message.send_from_id === authUser.id"
+  ></app-message>
+</div>
+<div class="send-message">
+  <textarea class="send-message__input"></textarea>
+  <div (click)="sendMessage()" class="send-message__send"></div>
+</div>

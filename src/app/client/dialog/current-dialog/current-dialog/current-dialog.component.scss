@@ -1,0 +1,98 @@
+@use 'sass:math';
+@import '../../../../../variables';
+
+.user-info {
+  font-size: $font-size-medium;
+  padding: $padding-large 40px;
+  max-width: 100%;
+
+  border: $border-medium;
+  border-radius: $border-radius-medium;
+
+  cursor: pointer;
+
+  transition: 0.3s ease-in-out;
+
+  &:hover {
+    background: $active;
+  }
+}
+
+.dialog {
+
+}
+
+.send-message {
+  margin: $margin-medium $margin-medium 0;
+
+  width: 100%;
+
+  display: flex;
+  &__input {
+    width: 90%;
+    outline: none;
+
+    padding: $padding-small;
+
+    resize: none;
+
+    border: $border-medium-blue;
+    border-radius: $border-radius-medium;
+  }
+  &__send {
+    width: 10%;
+    height: 65px;
+
+    border: $border-medium-blue;
+    border-radius: $border-radius-medium;
+
+    background-image: url(/assets/images/send-message.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+
+    transition: 0.3s ease-in-out;
+
+    &:hover, &:active {
+      background-color: $active;
+    }
+  }
+}
+
+@media (min-width: $desktop-min) {
+  .dialog {
+    height: 700px;
+    margin-left: 10px;
+
+    overflow: auto;
+  }
+}
+
+@media (max-width: $desktop-medium-max) and (min-width: $desktop-small-min) {
+  .dialog {
+    height: 550px;
+
+    overflow: auto;
+  }
+  .user-info {
+    margin:0 0 10px;
+  }
+}
+
+@media (max-width: $phone-max) {
+  .dialog {
+    height: 400px;
+
+    overflow: auto;
+  }
+  .send-message {
+    &__send {
+      width: 15%;
+    }
+    &__input {
+      width: 85%;
+    }
+  }
+  .user-info {
+    margin: 0 5px 10px 0;
+  }
+}
