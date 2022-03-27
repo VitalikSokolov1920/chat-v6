@@ -1,0 +1,14 @@
+<div *ngIf="dialogListItem" class="dialog-list__item">
+  <img alt="" [src]="getImageSrc()" class="dialog-list__item_image">
+  <div class="dialog-list__item_full-name">
+    {{fullName}}
+  </div>
+  <div class="dialog-list__item_last-message">
+    {{dialogListItem.last_message}}
+  </div>
+  <div class="dialog-list__item_online-status"
+  [ngClass]="{'dialog-list__item_online-status_online': dialogListItem.isOnline,
+              'dialog-list__item_online-status_offline': !dialogListItem.isOnline}">
+    {{getOnlineStatus()}}
+  </div>
+</div>

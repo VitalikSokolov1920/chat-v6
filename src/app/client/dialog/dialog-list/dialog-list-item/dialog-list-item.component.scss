@@ -1,0 +1,81 @@
+@import '/src/variables';
+
+:host {
+  cursor: pointer;
+}
+
+:host.item-active {
+  transition: 0.3s ease-in-out;
+
+  background: $active;
+
+  color: $text-color;
+  & .dialog-list__item_online-status {
+    color: inherit;
+  }
+}
+
+.dialog-list__item {
+  background: inherit;
+
+  border: $border-medium-white;
+  border-radius: $border-radius-medium;
+
+  margin-bottom: $margin-medium;
+
+  display: grid;
+
+  grid-template-columns: 50px 3fr 3fr;
+  grid-template-rows: 80px 20px;
+
+  padding: $padding-medium;
+
+  font-size: $font-size-small;
+
+  width: 100%;
+  &_image {
+    background: inherit;
+
+    margin: 25px 0;
+    max-width: 50px;
+    max-height: 50px;
+
+    border-radius: 50%;
+    border: $border-medium-blue;
+
+    object-fit: cover;
+  }
+  &_full-name {
+    background: inherit;
+
+    padding: $padding-small $padding-medium;
+
+    font-size: inherit;
+
+    grid-column-start: 3;
+  }
+  &_last-message {
+    background: inherit;
+
+    font-size: inherit;
+
+    grid-column: 2;
+
+    grid-row-start: 1;
+    grid-row-end: 3;
+  }
+  &_online-status {
+    background: inherit;
+
+    font-size: inherit;
+
+    grid-column-start: 3;
+    &_online {
+      color: $base-5;
+    }
+    &_offline {
+      color: $active;
+    }
+  }
+
+}
