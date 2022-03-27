@@ -1,0 +1,48 @@
+$base-1: #CAFAFE;
+// $base-2: #950740;
+$base-3: #FC4445;
+$base-4: #0B0C10;
+$base-5: #659DBD;
+
+$bg-color: $base-4;
+$text-color: $base-1;
+$border-color: $base-3;
+$header-text-color: $base-1;
+$active: $base-3;
+$error: $base-3;
+
+$border-medium: 1px solid $border-color;
+$border-large: 2px solid $border-color;
+
+$border-medium-white: 1px solid $text-color;
+$border-large-white: 2px solid $base-1;
+$border-large-x-white: 4px solid $base-1;
+
+$border-medium-blue: 1px solid $base-5;
+
+$border-radius-medium: 5px;
+
+$font-size-small: 18px;
+$font-size-medium: 24px;
+$font-size-medium-x: 35px;
+$font-size-large: 40px;
+
+$padding-large-x: 20px;
+$padding-large: 12px;
+$padding-medium: 8px;
+$padding-small: 4px;
+
+$margin-large-x: 30px;
+$margin-large: 10px;
+$margin-medium: 5px;
+$margin-small: 3px;
+
+$desktop-min: 1200px;
+
+$desktop-medium-max: 1199px;
+$desktop-medium-min: 992px;
+
+$desktop-small-max: 991px;
+$desktop-small-min: 768px;
+
+$phone-max: 767px;
