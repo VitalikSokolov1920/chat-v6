@@ -1,0 +1,14 @@
+<div class="user-list__item"
+     [ngClass]="{'user-list__item_online': user.is_online, 'user-list__item_offline': !user.is_online}">
+  <div class="user-list__item_name">
+    {{user.first_name}}
+  </div>
+  <img [src]="user.image" class="user-list__item_image" alt="">
+  <div class="cooperation"
+       [ngClass]="{'cooperation_online': user.is_online, 'cooperation_offline': !user.is_online}">
+    <button class="cooperation__btn" (click)="navigateToUserPage(user.id)">Перейти на страницу пользователя</button>
+    <button class="cooperation__btn" (click)="navigateToDialog(user.id)">Написать сообщение</button>
+    <button class="cooperation__btn" (click)="removeFromFriends(user.id)" *ngIf="user.is_friends">Удалить из друзей</button>
+    <button class="cooperation__btn" (click)="addToFriends(user.id)" *ngIf="!user.is_friends">Добавить в друзья</button>
+  </div>
+</div>
