@@ -1,0 +1,16 @@
+<div class="dialogs">
+  <img *ngIf="isDialogSelected" alt="Вернуться к диалогам" class="back-to-dialog-list-btn"
+       (click)="backToDialogs()"
+       src="../../../../assets/images/arrow-left.svg">
+  <div class="dialog-list" [ngClass]="{
+    'dialog-list_show': !isDialogSelected,
+    'dialog-list_close': isDialogSelected}">
+    <app-dialog-list-item routerLinkActive="item-active" *ngFor="let user of dialogList" [routerLink]="[user.id]" (click)="dialogSelected = true"
+                          [dialogListItem]="user"></app-dialog-list-item>
+  </div>
+  <div class="current-dialog"
+    [ngClass]="{'current-dialog_show': isDialogSelected,
+                'current-dialog_close': !isDialogSelected}">
+    <router-outlet></router-outlet>
+  </div>
+</div>
