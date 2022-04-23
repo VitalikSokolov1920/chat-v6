@@ -1,9 +1,9 @@
 import {forwardRef, Injectable} from "@angular/core";
 import {ClientModule} from "./client.module";
 import {HttpClient} from "@angular/common/http";
-import {Image, User} from "../_models";
+import {ActionResult, Image, User} from "../_models";
 import {environment} from "../../environments/environment";
-import {map} from "rxjs";
+import {map, Observable} from "rxjs";
 import {DomSanitizer} from "@angular/platform-browser";
 
 @Injectable({
@@ -51,4 +51,11 @@ export class UserService {
     );
   }
 
+  addToFriends$(id: string): Observable<ActionResult> {
+    return this.http.patch<ActionResult>(`${environment.apiUrl}/add-friend`, { id });
+  }
+
+  removeFromFriends$(id: string): Observable<ActionResult> {
+    return this.http.patch<ActionResult>(`${environment.apiUrl}/remove-friend`, { id });
+  }
 }

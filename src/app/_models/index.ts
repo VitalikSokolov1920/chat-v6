@@ -1,3 +1,4 @@
+export * from './action-result';
 export * from './dialog';
 export * from './dialog-list-item';
 export * from './image';

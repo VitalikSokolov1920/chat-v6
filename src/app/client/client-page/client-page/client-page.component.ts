@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Image, UserListItem} from "../../../_models";
 import {UserService} from "../../user.service";
 import {map, mergeMap, ReplaySubject, takeUntil} from "rxjs";
 import {AuthenticationService} from "../../../_services/authentication.service";
 import {FormControl} from "@angular/forms";
-import {SafeUrl} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-client-page',
@@ -14,7 +13,6 @@ import {SafeUrl} from "@angular/platform-browser";
 })
 export class ClientPageComponent implements OnInit {
   isAuthClientPage: boolean;
-  userImage: string | SafeUrl;
   user: UserListItem;
 
   imageControl: FormControl;
@@ -23,7 +21,8 @@ export class ClientPageComponent implements OnInit {
 
   constructor(private activatedRoute: ActivatedRoute,
               private userService: UserService,
-              private authService: AuthenticationService) {}
+              private authService: AuthenticationService,
+              private router: Router) {}
 
   ngOnInit(): void {
     this.imageControl = new FormControl('');
@@ -33,17 +32,18 @@ export class ClientPageComponent implements OnInit {
       map(params => params.get('id')),
       mergeMap((id) => {
         this.isAuthClientPage = id == this.authService.authUser.id;
-          return this.userService.getUserImage$(id).pipe(
-            map(image => {
-              this.userImage = image;
-              return id;
-            })
-          )
+        return this.userService.getUserById$(id).pipe(
+          map(user => {
+            this.user = user;
+
+            return id;
+          })
+        );
         }
       ),
-      mergeMap((id) => this.userService.getUserById$(id))
-    ).subscribe((user) => {
-      this.user = user;
+      mergeMap((id) => this.userService.getUserImage$(id))
+    ).subscribe((image) => {
+      this.user.image = image;
     });
   }
 
@@ -68,7 +68,7 @@ export class ClientPageComponent implements OnInit {
     };
 
     this.userService.sendUserImage(img).subscribe(image => {
-      this.userImage = image;
+      this.user.image = image;
     });
   }
 
@@ -77,14 +77,26 @@ export class ClientPageComponent implements OnInit {
   }
 
   navigateToDialog() {
-
+    this.router.navigate(['/client/dialogs', this.user.id]);
   }
 
   addToFriends() {
-
+    this.userService.addToFriends$(this.user.id).subscribe(result => {
+      if (result.actionResult) {
+        this.user.is_friends = true;
+      } else {
+        // добавить обработку ошибки
+      }
+    });
   }
 
   removeFromFriends() {
-
+    this.userService.removeFromFriends$(this.user.id).subscribe(result => {
+      if (result.actionResult) {
+        this.user.is_friends = false;
+      } else {
+        // добавить обработку ошибки
+      }
+    });
   }
 }

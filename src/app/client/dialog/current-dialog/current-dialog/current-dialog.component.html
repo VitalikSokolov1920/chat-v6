@@ -8,8 +8,8 @@
       <app-message
         *ngFor="let message of dialog"
         [message]="message"
-        [sendFromUser]="message.send_from_id == +authUser.id ? authUser : otherUser"
-        [isAuthUserSend]="message.send_from_id == +authUser.id"
+        [sendFromUser]="message.send_from_id == authUser.id ? authUser : otherUser"
+        [isAuthUserSend]="message.send_from_id == authUser.id"
       ></app-message>
     </div>
   </ng-container>

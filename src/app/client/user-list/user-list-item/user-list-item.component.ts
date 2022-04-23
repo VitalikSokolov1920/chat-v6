@@ -40,6 +40,10 @@ export class UserListItemComponent implements OnInit {
       }
     ];
 
+    this.restoreSelect();
+  }
+
+  private restoreSelect() {
     if (this.user.is_friends) {
       this.selectOptions[2] = {
         title: 'Удалить из друзей',
@@ -70,10 +74,10 @@ export class UserListItemComponent implements OnInit {
         this.navigateToDialog();
         break;
       case 2:
-        this.removeFromFriends();
+        this.addToFriends();
         break;
       case 3:
-        this.addToFriends();
+        this.removeFromFriends();
         break;
     }
   }
@@ -83,11 +87,27 @@ export class UserListItemComponent implements OnInit {
   }
 
   removeFromFriends() {
+    this.userService.removeFromFriends$(this.user.id).subscribe(result => {
+      if (result.actionResult) {
+        this.user.is_friends = false;
 
+        this.restoreSelect();
+      } else {
+        // добавить обработку ошибок
+      }
+    });
   }
 
   addToFriends() {
+    this.userService.addToFriends$(this.user.id).subscribe(result => {
+      if (result.actionResult) {
+        this.user.is_friends = true;
 
+        this.restoreSelect();
+      } else {
+        // добавить обработку ошибок
+      }
+    });
   }
 
 }
