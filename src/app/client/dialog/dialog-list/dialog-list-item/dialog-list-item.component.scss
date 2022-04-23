@@ -8,7 +8,7 @@
 
   position: relative;
 
-  grid-template-columns: 225px 50px;
+  grid-template-columns: auto 50px;
   grid-template-rows: calc(18px + 12px * 2) 70px;
 
   white-space: nowrap;
@@ -98,9 +98,9 @@
 
     font-size: $font-size-small;
 
-    text-align: right;
+    text-align: left;
 
-    padding-right: $padding-medium;
+    padding: $padding-small;
 
     grid-column: 1;
     grid-row: 3;
@@ -132,6 +132,37 @@
 
 @media (max-width: $desktop-medium-max) and (min-width: $desktop-medium-min){
   .dialog__item {
-    grid-template-columns: 150px 50px;
+
+  }
+}
+
+@media (max-width: $desktop-small-max) {
+  .dialog__item {
+    grid-template-columns: 25% 50% 25%;
+    grid-template-rows: repeat(3, auto);
+
+    &_image {
+      grid-column: 1;
+      grid-row-start: 1;
+      grid-row-end: 3;
+    }
+    &_name {
+      grid-row: 1;
+      grid-column: 2;
+    }
+    &_message {
+      grid-column-start: 2;
+      grid-column-end: 3;
+
+      grid-row: 2;
+    }
+    &_time {
+      grid-column: 3;
+      grid-row: 3;
+    }
+    &_unread-amount {
+      grid-row: 1;
+      grid-column: 3;
+    }
   }
 }
