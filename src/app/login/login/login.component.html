@@ -1,0 +1,25 @@
+<button class="registration-navigate" routerLink="/registration">
+  Регистрация
+</button>
+<div class="form" [formGroup]="formGroup">
+  <div class="form__item form__item-margin-bot-large">
+    <input placeholder=" " class="form__item_input" formControlName="login">
+    <label class="form__item_label">
+      Логин
+    </label>
+  </div>
+  <div class="form__item">
+    <input placeholder=" " class="form__item_input" formControlName="password">
+    <label class="form__item_label">
+      Пароль
+    </label>
+  </div>
+  <div class="form__item">
+    <button class="form__item_btn" (click)="authorize()">
+      Войти
+    </button>
+  </div>
+  <div class="form__item_error" *ngIf="errorMessage">
+    {{errorMessage}}
+  </div>
+</div>

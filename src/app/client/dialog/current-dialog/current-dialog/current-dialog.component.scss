@@ -13,13 +13,11 @@
 
   transition: 0.3s ease-in-out;
 
+  margin:0 0 10px;
+
   &:hover {
     background: $active;
   }
-}
-
-.dialog {
-
 }
 
 .send-message {
@@ -36,14 +34,14 @@
 
     resize: none;
 
-    border: $border-medium-blue;
+    border: $border-medium;
     border-radius: $border-radius-medium;
   }
   &__send {
     width: 10%;
     height: 65px;
 
-    border: $border-medium-blue;
+    border: $border-medium;
     border-radius: $border-radius-medium;
 
     background-image: url(/assets/images/send-message.svg);
@@ -72,9 +70,6 @@
     height: 550px;
 
     overflow: auto;
-  }
-  .user-info {
-    margin:0 0 10px;
   }
 }
 

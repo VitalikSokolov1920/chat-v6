@@ -1,5 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {DialogService} from "../dialog.service";
+import {DialogListItem} from "../../../_models";
+import {AuthenticationService} from "../../../_services/authentication.service";
 
 @Component({
   selector: 'app-dialog-list',
@@ -9,86 +12,56 @@ import {Router} from "@angular/router";
 export class DialogListComponent implements OnInit, OnDestroy {
   isDialogSelected = false;
 
-  set dialogSelected(isSelected: boolean) {
-    sessionStorage.setItem('isDialogSelected', String(isSelected));
+  dialogListItems: DialogListItem[];
 
-    this.isDialogSelected = isSelected;
-  }
-
-  dialogList: any[] = [
-    {
-      first_name: 'User1',
-      last_name: 'Test',
-      last_message: 'Hello',
-      isOnline: true,
-      unread_messages_amount: 10,
-      id: 0,
-    },
-    {
-      first_name: 'Vitalik',
-      last_name: 'Sokolov',
-      last_message: 'Hello from Vitalik Sokolov!',
-      isOnline: false,
-      unread_messages_amount: 0,
-      id: 1,
-    },
-    {
-      first_name: 'User1',
-      last_name: 'Test',
-      last_message: 'Hello',
-      isOnline: true,
-      unread_messages_amount: 10,
-      id: 2,
-    },
-    {
-      first_name: 'Vitalik',
-      last_name: 'Sokolov',
-      last_message: 'Hello from Vitalik Sokolov!',
-      isOnline: false,
-      unread_messages_amount: 0,
-      id: 3,
-    },
-    {
-      first_name: 'User1',
-      last_name: 'Test',
-      last_message: 'Hello',
-      isOnline: true,
-      unread_messages_amount: 10,
-      id: 4,
-    },
-    {
-      first_name: 'Vitalik',
-      last_name: 'Sokolov',
-      last_message: 'Hello from Vitalik Sokolov!',
-      isOnline: false,
-      unread_messages_amount: 0,
-      id: 5,
-    },
-    {
-      first_name: 'User1',
-      last_name: 'Test',
-      last_message: 'Hello',
-      isOnline: true,
-      unread_messages_amount: 10,
-      id: 6,
-    },
-    {
-      first_name: 'Vitalik',
-      last_name: 'Sokolov',
-      last_message: 'Hello from Vitalik Sokolov!',
-      isOnline: false,
-      unread_messages_amount: 0,
-      id: 7,
-    },
-  ];
-
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private dialogService: DialogService,
+              private authService: AuthenticationService) {
     if (sessionStorage.getItem('isDialogSelected')) {
       this.isDialogSelected = sessionStorage.getItem('isDialogSelected') === 'true';
     }
   }
 
   ngOnInit(): void {
+    this.dialogService.getDialogListItems().pipe().subscribe((dialogList) => {
+      this.dialogListItems = dialogList;
+    });
+
+    this.dialogService.waitChangeLastMessage$().subscribe(lastMessage => {
+      this.dialogListItems.forEach((item, index) => {
+        if (lastMessage.toSendingSocket) {
+          if (lastMessage.send_to_id == item.id && lastMessage.send_from_id == this.authService.authUser.id) {
+            const newItem = this.dialogListItems[index];
+
+            newItem.timestamp = lastMessage.timestamp;
+            newItem.last_message = lastMessage.last_message;
+            newItem.unread_messages_amount = lastMessage.unread_messages_amount;
+
+            this.dialogListItems[index] = newItem;
+
+            return;
+          }
+        } else {
+          if (lastMessage.send_from_id == item.id && lastMessage.send_to_id == this.authService.authUser.id) {
+            const newItem = this.dialogListItems[index];
+
+            newItem.timestamp = lastMessage.timestamp;
+            newItem.last_message = lastMessage.last_message;
+            newItem.unread_messages_amount = lastMessage.unread_messages_amount;
+
+            this.dialogListItems[index] = newItem;
+
+            return;
+          }
+        }
+      });
+    });
+  }
+
+  set dialogSelected(isSelected: boolean) {
+    sessionStorage.setItem('isDialogSelected', String(isSelected));
+
+    this.isDialogSelected = isSelected;
   }
 
   backToDialogs() {

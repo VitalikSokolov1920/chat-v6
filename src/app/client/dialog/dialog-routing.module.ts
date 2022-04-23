@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'dialogs',
+    redirectTo: '',
     pathMatch: 'full'
   }
 ];

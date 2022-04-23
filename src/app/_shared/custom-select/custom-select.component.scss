@@ -1,0 +1,46 @@
+@import '/src/variables';
+
+.select-container {
+  position: relative;
+
+  .select-item {
+    padding: $padding-medium;
+
+    border-bottom: $border-medium;
+
+    cursor: pointer;
+  }
+
+  .select-options {
+    min-width: 100%;
+    max-height: 300px;
+
+    overflow: auto;
+
+    position: absolute;
+
+    z-index: 5;
+
+    background: $active;
+
+    margin-top: 5px;
+    padding: $padding-medium;
+
+    border-radius: $border-radius-medium;
+    .option {
+      background: inherit;
+
+      padding: $padding-large-x;
+
+      cursor: pointer;
+
+      border-radius: $border-radius-medium;
+
+      transition: 0.3s ease-in-out;
+
+      &:hover, &:active {
+        background: $bg-color;
+      }
+    }
+  }
+}

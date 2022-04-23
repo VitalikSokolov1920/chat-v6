@@ -1,14 +1,20 @@
-<div *ngIf="dialogListItem" class="dialog-list__item">
-  <img alt="" [src]="getImageSrc()" class="dialog-list__item_image">
-  <div class="dialog-list__item_full-name">
+<div class="dialog__item"
+     [routerLink]="[dialogListItem.id]"
+     routerLinkActive="dialog__item_active"
+     *ngIf="dialogListItem">
+  <img [src]="dialogListItem.image"
+       alt=""
+       class="dialog__item_image">
+  <div class="dialog__item_name">
     {{fullName}}
   </div>
-  <div class="dialog-list__item_last-message">
+  <div class="dialog__item_message">
     {{dialogListItem.last_message}}
   </div>
-  <div class="dialog-list__item_online-status"
-  [ngClass]="{'dialog-list__item_online-status_online': dialogListItem.isOnline,
-              'dialog-list__item_online-status_offline': !dialogListItem.isOnline}">
-    {{getOnlineStatus()}}
-  </div>
+  <span class="dialog__item_time">
+    {{dialogListItem.timestamp | date: 'HH:mm'}}
+  </span>
+  <span class="dialog__item_unread-amount" *ngIf="dialogListItem.unread_messages_amount > 0">
+    {{unreadAmount}}
+  </span>
 </div>

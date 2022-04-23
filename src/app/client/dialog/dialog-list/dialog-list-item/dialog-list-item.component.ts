@@ -1,33 +1,41 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {DialogListItem} from "../../../../_models";
+import {DialogService} from "../../dialog.service";
+import {ReplaySubject} from "rxjs";
+import {DomSanitizer} from "@angular/platform-browser";
+import {UserService} from "../../../user.service";
 
 @Component({
   selector: 'app-dialog-list-item',
   templateUrl: './dialog-list-item.component.html',
   styleUrls: ['./dialog-list-item.component.scss']
 })
-export class DialogListItemComponent implements OnInit {
+export class DialogListItemComponent implements OnInit, OnDestroy {
   @Input()
-  dialogListItem: any;
+  dialogListItem: DialogListItem;
 
-  constructor() {}
+  private unsubscribe$ = new ReplaySubject(1);
+
+  constructor(private dialogService: DialogService,
+              private sanitizer: DomSanitizer,
+              private userService: UserService) {}
 
   ngOnInit(): void {
+    this.userService.getUserImage$(this.dialogListItem.id).subscribe(image => {
+        this.dialogListItem.image = image;
+    });
   }
 
-  getImageSrc() {
-    if (this.dialogListItem.image) {
-      return this.dialogListItem.image;
-    } else {
-      return 'assets/images/default-user-avatar.svg';
-    }
+  get unreadAmount() {
+    return this.dialogListItem.unread_messages_amount > 999 ? '999+' : this.dialogListItem.unread_messages_amount;
   }
 
   get fullName() {
     return this.dialogListItem.last_name.trim() + ' ' + this.dialogListItem.first_name.trim();
   }
 
-  getOnlineStatus() {
-    return this.dialogListItem.isOnline ? 'В сети' : 'Не в сети'
+  ngOnDestroy() {
+    this.unsubscribe$.next(null);
+    this.unsubscribe$.complete();
   }
-
 }

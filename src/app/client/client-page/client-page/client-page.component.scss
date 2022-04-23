@@ -28,9 +28,11 @@
     &__btn {
       width: 50%;
 
+      line-height: 70px;
+
       background: $active;
 
-      padding: $padding-large-x 0;
+      //padding: $padding-large-x 0;
 
       text-align: center;
 

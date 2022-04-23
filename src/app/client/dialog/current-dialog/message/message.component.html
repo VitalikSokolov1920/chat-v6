@@ -7,7 +7,8 @@
     [ngClass]="{
       'dialog__item_name_left': !isAuthUserSend,
       'dialog__item_name_right': isAuthUserSend
-    }">
+    }"
+    [routerLink]="['/client/client-page/', sendFromUser.id]">
     {{sendFromUser.last_name}} {{sendFromUser.first_name}}
   </div>
   <img
@@ -15,7 +16,7 @@
       'dialog__item_image_left': !isAuthUserSend,
       'dialog__item_image_right': isAuthUserSend
     }"
-    alt="" [src]="getImageSrc(message.send_from_id)" class="dialog__item_image">
+    alt="" [src]="getImageSrc()" class="dialog__item_image">
   <div class="dialog__item_message">
     {{message.message_text}}
   </div>
@@ -24,6 +25,8 @@
       'dialog__item_date-send_left': !isAuthUserSend,
       'dialog__item_date-send_right': isAuthUserSend
     }">
-    {{message.date_send | date:'shortTime'}}
+    {{message.timestamp | date:'shortTime'}}
+    <br>
+    {{message.id}}
   </div>
 </div>

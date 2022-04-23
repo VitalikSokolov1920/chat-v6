@@ -1,24 +1,48 @@
 @import '../../../../variables';
 
+.select-group {
+  width: 50%;
+
+  margin-bottom: $margin-medium;
+}
+
 .user-list {
   width: 100%;
   display: grid;
 
-  grid-template-columns: repeat(3, 33%);
+  grid-template-columns: repeat(3, 1fr);
 
   grid-gap: 10px;
 }
 
+@media (max-width: $desktop-medium-max) and (min-width: $desktop-medium-min) {
+  .select-group {
+    width: 75%;
+  }
+}
+
 @media (max-width: $desktop-small-max) and (min-width: $desktop-small-min) {
   .user-list {
-    grid-template-columns: repeat(2, 50%);
+    grid-template-columns: repeat(2, 1fr);
 
     grid-gap: 10px;
+  }
+
+  .select-group {
+    width: 100%;
   }
 }
 
 @media (max-width: $phone-max) {
   .user-list {
+    width: 400px;
+
+    margin: 0 auto;
+
     grid-template-columns: 1fr;
+  }
+
+  .select-group {
+    width: 100%;
   }
 }

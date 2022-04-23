@@ -1,0 +1,13 @@
+<div class="select-container" [close-on]="'click'" (emit)="hideList()">
+  <div class="select-item" *ngIf="showSelectedItem"
+       (click)="showItems = !showItems">
+    {{selectedItem.title}}
+  </div>
+  <div class="select-options" *ngIf="showItems">
+    <div class="option"
+         (click)="setSelectedItem(option)"
+         *ngFor="let option of items">
+      {{option.title}}
+    </div>
+  </div>
+</div>

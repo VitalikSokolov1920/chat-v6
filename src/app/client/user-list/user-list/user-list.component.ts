@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {SelectItem} from "../../../_shared/custom-select/custom-select.component";
+import {SELECT_ITEM, UserListItem} from "../../../_models";
+import {UserListService} from "../user-list.service";
+import {take} from "rxjs";
 
 @Component({
   selector: 'app-user-list',
@@ -6,75 +10,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-list.component.scss']
 })
 export class UserListComponent implements OnInit {
-  userList = [
+  selectItems: SelectItem[] = [
     {
-      first_name: 'Test',
-      last_name: 'User',
-      image: 'assets/images/stub1.jpg',
-      is_friends: true,
-      is_online: true,
+      title: 'Друзья',
+      value: SELECT_ITEM.FRIENDS
     },
     {
-      first_name: 'Usersrdasd',
-      last_name: 'ASdasdasd',
-      image: 'assets/images/stub2.jpg',
-      is_friends: false,
-      is_online: false,
-    },
-    {
-      first_name: 'a',
-      last_name: 's',
-      image: 'assets/images/stub3.jpg',
-      is_friends: false,
-      is_online: true,
-    },
-    {
-      first_name: 'sssssssssssswQ',
-      last_name: 'QSdasdsAD',
-      image: 'assets/images/stub2.jpg',
-      is_friends: true,
-      is_online: false,
-    },
-    {
-      first_name: 'aasd',
-      last_name: 'ddasd',
-      image: 'assets/images/stub4.jpg',
-      is_friends: false,
-      is_online: true,
-    },
-    {
-      first_name: 'aasdasd',
-      last_name: 'asdadadasdasdaww',
-      image: 'assets/images/stub1.jpg',
-      is_friends: true,
-      is_online: false,
-    },
-    {
-      first_name: 'aasdasd',
-      last_name: 'asdadadasdasdaww',
-      image: 'assets/images/stub1.jpg',
-      is_friends: true,
-      is_online: false,
-    },
-    {
-      first_name: 'aasdasd',
-      last_name: 'asdadadasdasdaww',
-      image: 'assets/images/stub4.jpg',
-      is_friends: true,
-      is_online: false,
-    },
-    {
-      first_name: 'aasdasd',
-      last_name: 'asdadadasdasdaww',
-      image: 'assets/images/stub1.jpg',
-      is_friends: true,
-      is_online: false,
-    },
-  ]
+      title: 'Все пользователи',
+      value: SELECT_ITEM.ALL,
+    }
+  ];
 
-  constructor() {}
+  userList: UserListItem[] = [];
 
-  ngOnInit(): void {
+  private selectedCategory: SelectItem;
+
+  constructor(private userListService: UserListService) {}
+
+  ngOnInit(): void {}
+
+  trySearch() {
+    this.userListService.getUserList(this.selectedCategory.value).pipe(take(1)).subscribe(users => {
+      this.userList = users;
+    });
+  }
+
+  changeUsersCategory(selectedCategory: SelectItem) {
+    this.selectedCategory = selectedCategory;
+
+    this.trySearch();
   }
 
 }

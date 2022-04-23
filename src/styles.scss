@@ -9,4 +9,57 @@
   background-color: $bg-color;
 
   box-sizing: border-box;
+
+  outline: none;
+}
+
+::-webkit-scrollbar {
+  background: $base-1;
+
+  border-radius: 15px;
+
+  width: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $active;
+
+  border-radius: 15px;
+}
+
+.empty-message {
+  position: absolute;
+
+  z-index: 2;
+
+  top: 50%;
+  left: 50%;
+
+  transform: translate(-50%, -50%);
+
+  font-size: $font-size-medium-x;
+
+  &__text {
+    padding: $padding-large;
+
+    font-size: inherit;
+  }
+
+  &__link {
+    font-size: inherit;
+
+    padding: $padding-large;
+
+    cursor: pointer;
+
+    border-bottom: $border-medium;
+
+    transition: 0.3s ease-in-out;
+
+    &:hover {
+      background: $active;
+
+      border-radius: $border-radius-medium;
+    }
+  }
 }

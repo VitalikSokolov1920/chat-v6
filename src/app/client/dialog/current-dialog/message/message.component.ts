@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Message, User} from "../../../../_models";
 
 @Component({
   selector: 'app-message',
@@ -7,9 +8,9 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class MessageComponent implements OnInit {
   @Input()
-  message: any;
+  message: Message;
   @Input()
-  sendFromUser: any;
+  sendFromUser: User;
   @Input()
   isAuthUserSend: boolean = false;
 
@@ -17,13 +18,11 @@ export class MessageComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  getImageSrc(id: number) {
-    if (id == this.sendFromUser.id) {
+  getImageSrc() {
       if (this.sendFromUser.image) {
         return this.sendFromUser.image;
       } else {
         return 'assets/images/default-user-avatar.svg';
       }
-    }
   }
 }

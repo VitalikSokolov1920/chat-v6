@@ -1,4 +1,4 @@
-<div class="page">
+<div class="page" *ngIf="user">
   <div class="page_name">
     {{fullName}}
   </div>
@@ -7,10 +7,13 @@
     <div class="cooperation__btn" (click)="navigateToDialog()">
       Написать сообщение
     </div>
-    <div class="cooperation__btn" (click)="addToFriends()" *ngIf="!user.is_friends && !this.isAuthClientPage">
+    <div class="cooperation__btn" *ngIf="isAuthClientPage">
+      <app-custom-image-picker (success)="imageLoaded($event)" (error)="imageLoadError($event)"></app-custom-image-picker>
+    </div>
+    <div class="cooperation__btn" (click)="addToFriends()" *ngIf="!user.is_friends && !isAuthClientPage">
       Добавить в друзья
     </div>
-    <div class="cooperation__btn" (click)="removeFromFriends()" *ngIf="user.is_friends && !this.isAuthClientPage">
+    <div class="cooperation__btn" (click)="removeFromFriends()" *ngIf="user.is_friends && !isAuthClientPage">
       Удалить из друзей
     </div>
   </div>

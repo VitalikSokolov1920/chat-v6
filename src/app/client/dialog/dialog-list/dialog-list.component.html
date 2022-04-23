@@ -1,3 +1,13 @@
+<ng-container *ngIf="dialogListItems && dialogListItems.length == 0">
+  <div class="empty-message">
+    <div class="empty-message__text">
+      Сейчас у вас нет диалогов.<br>
+    </div>
+    <div class="empty-message__link" routerLink="../users">
+      Перейти к списку пользователей
+    </div>
+  </div>
+</ng-container>
 <div class="dialogs">
   <img *ngIf="isDialogSelected" alt="Вернуться к диалогам" class="back-to-dialog-list-btn"
        (click)="backToDialogs()"
@@ -5,8 +15,11 @@
   <div class="dialog-list" [ngClass]="{
     'dialog-list_show': !isDialogSelected,
     'dialog-list_close': isDialogSelected}">
-    <app-dialog-list-item routerLinkActive="item-active" *ngFor="let user of dialogList" [routerLink]="[user.id]" (click)="dialogSelected = true"
-                          [dialogListItem]="user"></app-dialog-list-item>
+    <app-dialog-list-item routerLinkActive="item-active"
+                          [dialogListItem]="dialogItem"
+                          *ngFor="let dialogItem of dialogListItems"
+                          (click)="dialogSelected = true"
+                          ></app-dialog-list-item>
   </div>
   <div class="current-dialog"
     [ngClass]="{'current-dialog_show': isDialogSelected,
