@@ -1,9 +1,8 @@
-import {forwardRef, Injectable} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {BehaviorSubject} from "rxjs";
-import {SpinnerModule} from "./spinner.module";
 
 @Injectable({
-  providedIn: forwardRef(() => SpinnerModule)
+  providedIn: 'root'
 })
 export class SpinnerService {
   constructor() {}
@@ -15,6 +14,10 @@ export class SpinnerService {
   }
 
   public hide() {
-    this.isShow.next(false);
+    const timeout = setTimeout(() => {
+      this.isShow.next(false);
+
+      clearTimeout(timeout);
+    }, 400);
   }
 }

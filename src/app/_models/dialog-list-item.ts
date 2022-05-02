@@ -1,6 +1,11 @@
 import {SafeUrl} from "@angular/platform-browser";
 
-export class DialogListItem {
+export class DialogListItemInfo {
+  send_from_id?: string;
+  send_to_id?: string;
+}
+
+export class DialogListItem extends DialogListItemInfo{
   last_name: string;
   first_name: string;
 
@@ -11,9 +16,6 @@ export class DialogListItem {
   id: string;
   last_message: string;
   unread_messages_amount?: number;
-
-  send_from_id?: string;
-  send_to_id?: string;
 
   toSendingSocket?: boolean
 }

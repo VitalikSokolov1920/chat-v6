@@ -1,3 +1,35 @@
+<button class="btn-navigate" routerLink="/login">
+  Авторизация
+</button>
 <div class="container">
-
+  <div class="form" [formGroup]="regGroup">
+    <div class="control col-1 row-1 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
+      <input placeholder=" " formControlName="firstName" class="control__input">
+      <label class="control__label">Имя</label>
+    </div>
+    <div class="control col-1 row-2 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
+      <input placeholder=" " formControlName="lastName" class="control__input">
+      <label class="control__label">Фамилия</label>
+    </div>
+    <div class="control col-1 row-3 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
+      <input placeholder=" " formControlName="login" class="control__input">
+      <label class="control__label">Логин</label>
+    </div>
+    <div class="control col-1 row-4 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
+      <input placeholder=" " formControlName="password" class="control__input">
+      <label class="control__label">Пароль</label>
+    </div>
+    <div class="control col-1 row-5 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
+      <input placeholder=" " formControlName="repeatPassword" class="control__input">
+      <label class="control__label">Повторите пароль</label>
+    </div>
+    <div class="control control_p-small col-2 row-1 control_bordered control_bordered-radius-medium control_w100">
+      <app-custom-image-picker (success)="setImage($event)"></app-custom-image-picker>
+    </div>
+    <img alt="" *ngIf="image.value != null"
+         [src]="image.value"
+         class="control control_bordered control_bordered-radius-medium col-2 row-2-5 control_w100 image">
+  </div>
+  <button (click)="registration()" class="btn btn_p-large-x btn_center btn_margin-vertical-large btn_bordered btn_bordered-radius-medium">Зарегистрироваться</button>
+  <div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
 </div>

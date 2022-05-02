@@ -8,6 +8,7 @@ import {LoginModule} from "./login/login/login.module";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RegistrationModule} from "./login/registration/registration.module";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
+import {SpinnerModule} from "./spinner/spinner.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {JwtInterceptor} from "./interceptors/jwt.interceptor";
     CommonModule,
     LoginModule,
     HttpClientModule,
-    RegistrationModule
+    RegistrationModule,
+    SpinnerModule
   ],
   providers: [
     {

@@ -5,6 +5,7 @@ import {UserService} from "../../user.service";
 import {map, mergeMap, ReplaySubject, takeUntil} from "rxjs";
 import {AuthenticationService} from "../../../_services/authentication.service";
 import {FormControl} from "@angular/forms";
+import {SpinnerService} from "../../../spinner/spinner.service";
 
 @Component({
   selector: 'app-client-page',
@@ -22,7 +23,8 @@ export class ClientPageComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute,
               private userService: UserService,
               private authService: AuthenticationService,
-              private router: Router) {}
+              private router: Router,
+              private spinner: SpinnerService) {}
 
   ngOnInit(): void {
     this.imageControl = new FormControl('');
@@ -44,6 +46,8 @@ export class ClientPageComponent implements OnInit {
       mergeMap((id) => this.userService.getUserImage$(id))
     ).subscribe((image) => {
       this.user.image = image;
+
+      this.spinner.hide();
     });
   }
 

@@ -4,6 +4,7 @@
   font-size: $font-size-medium;
   margin: 0;
   padding: 0;
+  border: none;
 
   color: $text-color;
   background-color: $bg-color;
@@ -61,5 +62,27 @@
 
       border-radius: $border-radius-medium;
     }
+  }
+}
+
+.btn-navigate {
+  position: absolute;
+
+  top: 0;
+  right: 0;
+
+  padding: $padding-large;
+
+  margin: 25px 25px 0 0;
+
+  border: $border-medium;
+  border-radius: $border-radius-medium;
+
+  cursor: pointer;
+
+  transition: 0.2s ease-in-out;
+
+  &:hover {
+    background: $active;
   }
 }

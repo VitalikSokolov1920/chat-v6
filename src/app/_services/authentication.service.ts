@@ -18,7 +18,7 @@ export class AuthenticationService {
     return this.user;
   }
 
-  set authUser(user: any) {
+  set authUser(user: User) {
     if (user) {
       this.user = user;
 
@@ -50,16 +50,27 @@ export class AuthenticationService {
       password,
     };
 
-    return this.http.get(`${environment.apiUrl}/login`, { params })
+    return this.http.get<User>(`${environment.apiUrl}/login`, { params })
       .pipe(
         map(user => {
           if (!user) {
             return null;
           } else {
             this.authUser = user;
+
             return user;
           }
         }),
       );
+  }
+
+  registrationUser(userInfo: object) {
+    return this.http.post<User>(`${environment.apiUrl}/register`, {...userInfo}).pipe(
+      map(user => {
+        this.authUser = user;
+
+        return user;
+      })
+    );
   }
 }

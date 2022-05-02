@@ -1,4 +1,6 @@
 export * from './action-result';
+export * from './all-messages-read';
+export * from './change-unread-amount';
 export * from './dialog';
 export * from './dialog-list-item';
 export * from './image';

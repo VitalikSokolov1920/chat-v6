@@ -58,7 +58,9 @@
     }
   }
 
-  .image {
+  .wrapper {
+    margin-top: $margin-medium;
+
     grid-column-start: 1;
     grid-column-end: 3;
 
@@ -66,12 +68,22 @@
 
     position: relative;
 
+
+    padding-top: 56.25%;
+  }
+
+  .image {
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
     width: 100%;
     max-height: 480px;
 
     object-fit: cover;
-
-    padding: $padding-medium 0;
   }
 }
 

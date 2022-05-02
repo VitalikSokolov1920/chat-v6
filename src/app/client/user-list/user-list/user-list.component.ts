@@ -3,6 +3,7 @@ import {SelectItem} from "../../../_shared/custom-select/custom-select.component
 import {SELECT_ITEM, UserListItem} from "../../../_models";
 import {UserListService} from "../user-list.service";
 import {take} from "rxjs";
+import {SpinnerService} from "../../../spinner/spinner.service";
 
 @Component({
   selector: 'app-user-list',
@@ -25,17 +26,22 @@ export class UserListComponent implements OnInit {
 
   private selectedCategory: SelectItem;
 
-  constructor(private userListService: UserListService) {}
+  constructor(private userListService: UserListService,
+              private spinner: SpinnerService) {}
 
   ngOnInit(): void {}
 
   trySearch() {
     this.userListService.getUserList(this.selectedCategory.value).pipe(take(1)).subscribe(users => {
       this.userList = users;
+
+      this.spinner.hide();
     });
   }
 
   changeUsersCategory(selectedCategory: SelectItem) {
+    this.spinner.show();
+
     this.selectedCategory = selectedCategory;
 
     this.trySearch();

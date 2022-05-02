@@ -20,6 +20,24 @@
   }
 }
 
+.date-separator {
+  position: fixed;
+
+  top: 10px;
+
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  background: $active;
+
+  border-radius: $border-radius-medium;
+
+  font-size: $font-size-small;
+
+  padding: $padding-medium;
+}
+
 .send-message {
   margin: $margin-medium $margin-medium 0;
 

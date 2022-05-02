@@ -3,7 +3,11 @@
 .select-container {
   position: relative;
 
+  font-size: $font-size-small;
+
   .select-item {
+    font-size: inherit;
+
     padding: $padding-medium;
 
     border-bottom: $border-medium;
@@ -12,6 +16,8 @@
   }
 
   .select-options {
+    font-size: inherit;
+
     min-width: 100%;
     max-height: 300px;
 
@@ -28,6 +34,7 @@
 
     border-radius: $border-radius-medium;
     .option {
+      font-size: inherit;
       background: inherit;
 
       padding: $padding-large-x;

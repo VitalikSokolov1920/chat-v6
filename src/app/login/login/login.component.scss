@@ -1,27 +1,5 @@
 @import 'src/variables';
 
-.registration-navigate {
-  position: absolute;
-
-  top: 0;
-  right: 0;
-
-  padding: $padding-large;
-
-  margin: 50px 50px 0 0;
-
-  border: $border-medium;
-  border-radius: $border-radius-medium;
-
-  cursor: pointer;
-
-  transition: 0.2s ease-in-out;
-
-  &:hover {
-    background: $active;
-  }
-}
-
 .form {
   width: 400px;
   position: absolute;

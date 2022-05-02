@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {DialogService} from "../dialog.service";
 import {DialogListItem} from "../../../_models";
 import {AuthenticationService} from "../../../_services/authentication.service";
+import {SpinnerService} from "../../../spinner/spinner.service";
 
 @Component({
   selector: 'app-dialog-list',
@@ -16,6 +17,7 @@ export class DialogListComponent implements OnInit, OnDestroy {
 
   constructor(private router: Router,
               private dialogService: DialogService,
+              private spinner: SpinnerService,
               private authService: AuthenticationService) {
     if (sessionStorage.getItem('isDialogSelected')) {
       this.isDialogSelected = sessionStorage.getItem('isDialogSelected') === 'true';
@@ -23,8 +25,10 @@ export class DialogListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dialogService.getDialogListItems().pipe().subscribe((dialogList) => {
+    this.dialogService.getDialogListItems().subscribe((dialogList) => {
       this.dialogListItems = dialogList;
+
+      this.spinner.hide();
     });
 
     this.dialogService.waitChangeLastMessage$().subscribe(lastMessage => {
@@ -55,7 +59,24 @@ export class DialogListComponent implements OnInit, OnDestroy {
           }
         }
       });
+
+      this.dialogListItems.sort((a, b) => {
+        const datea = new Date(a.timestamp);
+        const dateb = new Date(b.timestamp);
+
+        return datea > dateb ? -1 : 1;
+      });
     });
+
+    this.dialogService.waitUpdateUnreadMessagesAmount$().subscribe(unreadAmount => {
+      const item = this.dialogListItems.find((item) => {
+        return item.id == unreadAmount.sendFromId;
+      });
+
+      const index = this.dialogListItems.indexOf(item);
+
+      this.dialogListItems[index].unread_messages_amount = unreadAmount.unreadMessagesAmount;
+    })
   }
 
   set dialogSelected(isSelected: boolean) {

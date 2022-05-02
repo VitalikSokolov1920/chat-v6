@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../_services/authentication.service";
 import {Router} from "@angular/router";
+import {SpinnerService} from "../../spinner/spinner.service";
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
+              private spinner: SpinnerService,
               private router: Router) {
     this.formGroup = this.fb.group({
       login: this.fb.control('', [Validators.required]),
@@ -21,7 +23,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.spinner.hide();
+  }
 
   authorize() {
     this.errorMessage = '';

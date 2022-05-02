@@ -1,21 +1,17 @@
-<app-spinner></app-spinner>
-<ng-container *ngIf="showDialog">
-  <div *ngIf="otherUser" class="user-info" [routerLink]="['/client/client-page', otherUser.id]">
-    {{fullName}}
-  </div>
-  <ng-container *ngIf="dialog">
-    <div class="dialog" #scroll>
-      <app-message
-        *ngFor="let message of dialog"
-        [message]="message"
-        [sendFromUser]="message.send_from_id == authUser.id ? authUser : otherUser"
-        [isAuthUserSend]="message.send_from_id == authUser.id"
-      ></app-message>
-    </div>
-  </ng-container>
-  <div class="send-message">
-  <textarea rows="3" [formControl]="messageControl"
-            (keyup.enter)="sendMessage()" class="send-message__input"></textarea>
-    <div (click)="sendMessage()" class="send-message__send"></div>
+<div *ngIf="otherUser" class="user-info" [routerLink]="['/client/client-page', otherUser.id]">
+  {{fullName}}
+</div>
+<ng-container *ngIf="dialog">
+  <div class="dialog" #scroll (scroll)="scrollTop()">
+    <app-message *ngFor="let message of dialog; let i = index"
+      [message]="message"
+      [sendFromUser]="message.send_from_id == authUser.id ? authUser : otherUser"
+      [isAuthUserSend]="message.send_from_id == authUser.id"
+    ></app-message>
   </div>
 </ng-container>
+<div class="send-message">
+<textarea rows="3" [formControl]="messageControl"
+          (keyup.enter)="sendMessage()" class="send-message__input"></textarea>
+  <div (click)="sendMessage()" class="send-message__send"></div>
+</div>
