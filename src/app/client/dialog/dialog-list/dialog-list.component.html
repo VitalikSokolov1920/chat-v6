@@ -8,7 +8,7 @@
     </div>
   </div>
 </ng-container>
-<div class="dialogs" *ngIf="dialogListItems && dialogListItems.length > 0">
+<div class="dialogs" *ngIf="dialogListItems">
   <img *ngIf="isDialogSelected" alt="Вернуться к диалогам" class="back-to-dialog-list-btn"
        (click)="backToDialogs()"
        src="../../../../assets/images/arrow-left.svg">
@@ -24,6 +24,6 @@
   <div class="current-dialog"
     [ngClass]="{'current-dialog_show': isDialogSelected,
                 'current-dialog_close': !isDialogSelected}">
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="loadUserList($event)" ></router-outlet>
   </div>
 </div>

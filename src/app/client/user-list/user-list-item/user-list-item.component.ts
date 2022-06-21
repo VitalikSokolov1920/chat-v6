@@ -39,6 +39,12 @@ export class UserListItemComponent implements OnInit {
     this.restoreSelect();
   }
 
+  menuClick(event: MouseEvent) {
+    event.stopPropagation();
+
+    this.showMenu = !this.showMenu;
+  }
+
   private restoreSelect() {
     if (this.user.id != this.authService.authUser.id) {
       this.selectOptions[2] = {

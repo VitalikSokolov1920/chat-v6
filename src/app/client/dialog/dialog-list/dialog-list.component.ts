@@ -4,6 +4,7 @@ import {DialogService} from "../dialog.service";
 import {DialogListItem} from "../../../_models";
 import {AuthenticationService} from "../../../_services/authentication.service";
 import {SpinnerService} from "../../../spinner/spinner.service";
+import {CurrentDialogComponent} from "../current-dialog/current-dialog/current-dialog.component";
 
 @Component({
   selector: 'app-dialog-list',
@@ -25,7 +26,7 @@ export class DialogListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dialogService.getDialogListItems().subscribe((dialogList) => {
+    this.dialogService.getDialogListItems$().subscribe((dialogList) => {
       this.dialogListItems = dialogList;
 
       this.spinner.hide();
@@ -60,12 +61,19 @@ export class DialogListComponent implements OnInit, OnDestroy {
         }
       });
 
-      this.dialogListItems.sort((a, b) => {
-        const datea = new Date(a.timestamp);
-        const dateb = new Date(b.timestamp);
+      this.sort();
+    });
 
-        return datea > dateb ? -1 : 1;
-      });
+    this.dialogService.waitMessage$().subscribe((message) => {
+      const item = this.dialogListItems.find((item) => item.id == message.send_from_id);
+
+      if (!item && this.authService.authUser.id != message.send_from_id) {
+        this.dialogService.getDialogListItem$(message.send_from_id).subscribe((item) => {
+          this.dialogListItems.push(item);
+
+          this.sort();
+        });
+      }
     });
 
     this.dialogService.waitUpdateUnreadMessagesAmount$().subscribe(unreadAmount => {
@@ -76,6 +84,24 @@ export class DialogListComponent implements OnInit, OnDestroy {
       const index = this.dialogListItems.indexOf(item);
 
       this.dialogListItems[index].unread_messages_amount = unreadAmount.unreadMessagesAmount;
+    })
+  }
+
+  loadUserList(component: CurrentDialogComponent) {
+    const dialogId = component.activatedRoute.snapshot.paramMap.get('id');
+
+    const item = this.dialogListItems.find((item) => item.id == dialogId);
+
+    if (item) {
+      return;
+    }
+
+    this.dialogService.getDialogListItem$(dialogId).subscribe(item => {
+      if (!this.dialogListItems) {
+        this.dialogListItems = [];
+      }
+
+      this.dialogListItems.unshift(item);
     })
   }
 
@@ -90,8 +116,19 @@ export class DialogListComponent implements OnInit, OnDestroy {
     this.router.navigate(['client/dialogs']);
   }
 
+  private sort() {
+    this.dialogListItems.sort((a, b) => {
+      const datea = new Date(a.timestamp);
+      const dateb = new Date(b.timestamp);
+
+      return datea > dateb ? -1 : 1;
+    });
+  }
+
   private clear() {
     this.dialogSelected = false;
+
+    this.dialogService.deleteEmptyDialogs().subscribe();
   }
 
   ngOnDestroy() {

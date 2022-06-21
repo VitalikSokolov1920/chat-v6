@@ -37,7 +37,7 @@ export class CurrentDialogComponent implements OnInit, OnDestroy, AfterViewCheck
   private scrolled = false;
   private maxIndex = 0;
 
-  private dialogId: string;
+  dialogId: string;
 
   private sliceParams: SliceParamsRequest;
 
@@ -48,7 +48,7 @@ export class CurrentDialogComponent implements OnInit, OnDestroy, AfterViewCheck
 
   dateSeparator: Date;
 
-  constructor(private activatedRoute: ActivatedRoute,
+  constructor(public activatedRoute: ActivatedRoute,
               private dialogService: DialogService,
               private authService: AuthenticationService,
               private userService: UserService,

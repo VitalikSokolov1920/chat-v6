@@ -2,7 +2,7 @@
   <div class="name">
     {{fullName}}
   </div>
-  <div class="menu" (click)="showMenu = !showMenu">
+  <div class="menu" (click)="menuClick($event)">
     <div class="menu__item"></div>
     <app-custom-select (selected)="executeOption($event)"
                        (closed)="showMenu = false"

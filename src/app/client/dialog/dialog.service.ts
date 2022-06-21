@@ -16,8 +16,16 @@ export class DialogService {
   constructor(private http: HttpClient,
               @Inject(SOCKET) private socket: Socket) {}
 
-  getDialogListItems() {
+  getDialogListItems$() {
     return this.http.get<DialogListItem[]>(`${environment.apiUrl}/dialog-list`);
+  }
+
+  getDialogListItem$(dialogItemId: string) {
+    const params = {
+      dialogId: dialogItemId
+    };
+
+    return this.http.get<DialogListItem>(`${environment.apiUrl}/dialog-list-item`, { params });
   }
 
   waitMessage$(): Observable<Message> {
@@ -73,5 +81,9 @@ export class DialogService {
 
   waitMessageRead() {
     return this.socket.on<string>('messageRead');
+  }
+
+  deleteEmptyDialogs() {
+    return this.http.delete<void>(`${environment.apiUrl}/delete-empty-dialogs`);
   }
 }
