@@ -1,29 +1,52 @@
-<ng-container *ngIf="dialogListItems && dialogListItems.length == 0">
-  <div class="empty-message">
-    <div class="empty-message__text">
-      Сейчас у вас нет диалогов.<br>
+<!--<div class="dialogs__search">-->
+<!--  asd-->
+<!--</div>-->
+<!--<ng-container *ngIf="dialogListItems && dialogListItems.length == 0">-->
+<!--  <div class="empty-message">-->
+<!--    <div class="empty-message__text">-->
+<!--      Сейчас у вас нет диалогов.<br>-->
+<!--    </div>-->
+<!--    <div class="empty-message__link" routerLink="../users">-->
+<!--      Перейти к списку пользователей-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</ng-container>-->
+<!--<div class="dialogs" *ngIf="dialogListItems">-->
+<!--  <img *ngIf="isDialogSelected" alt="Вернуться к диалогам" class="back-to-dialog-list-btn"-->
+<!--       (click)="backToDialogs()"-->
+<!--       src="../../../../assets/images/arrow-left.svg">-->
+<!--  <div class="dialog-list" [ngClass]="{-->
+<!--    'dialog-list_show': !isDialogSelected,-->
+<!--    'dialog-list_close': isDialogSelected}">-->
+<!--    <app-dialog-list-item routerLinkActive="item-active"-->
+<!--                          [dialogListItem]="dialogItem"-->
+<!--                          *ngFor="let dialogItem of dialogListItems"-->
+<!--                          (click)="dialogSelected = true"-->
+<!--                          ></app-dialog-list-item>-->
+<!--  </div>-->
+<!--  <div class="current-dialog"-->
+<!--    [ngClass]="{'current-dialog_show': isDialogSelected,-->
+<!--                'current-dialog_close': !isDialogSelected}">-->
+<!--    <router-outlet (activate)="loadUserList($event)" ></router-outlet>-->
+<!--  </div>-->
+<!--</div>-->
+<!--бчёртка для всего раздела-->
+<div class="dialogs-container">
+<!--  для списка диалогов-->
+  <div class="dialogs__list">
+<!--    поиск-->
+    <div class="dialogs__search-container">
+      <input class="dialogs__search" placeholder="Поиск">
     </div>
-    <div class="empty-message__link" routerLink="../users">
-      Перейти к списку пользователей
+    <div class="dialogs__list-items">
+      <app-dialog-list-item routerLinkActive="item-active"
+                            [dialogListItem]="dialogItem"
+                            *ngFor="let dialogItem of dialogListItems"
+      ></app-dialog-list-item>
     </div>
   </div>
-</ng-container>
-<div class="dialogs" *ngIf="dialogListItems">
-  <img *ngIf="isDialogSelected" alt="Вернуться к диалогам" class="back-to-dialog-list-btn"
-       (click)="backToDialogs()"
-       src="../../../../assets/images/arrow-left.svg">
-  <div class="dialog-list" [ngClass]="{
-    'dialog-list_show': !isDialogSelected,
-    'dialog-list_close': isDialogSelected}">
-    <app-dialog-list-item routerLinkActive="item-active"
-                          [dialogListItem]="dialogItem"
-                          *ngFor="let dialogItem of dialogListItems"
-                          (click)="dialogSelected = true"
-                          ></app-dialog-list-item>
-  </div>
-  <div class="current-dialog"
-    [ngClass]="{'current-dialog_show': isDialogSelected,
-                'current-dialog_close': !isDialogSelected}">
+<!--  текущий диалог-->
+  <div class="current-dialog">
     <router-outlet (activate)="loadUserList($event)" ></router-outlet>
   </div>
 </div>

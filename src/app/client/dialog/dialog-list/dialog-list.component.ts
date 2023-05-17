@@ -12,7 +12,6 @@ import {CurrentDialogComponent} from "../current-dialog/current-dialog/current-d
   styleUrls: ['./dialog-list.component.scss']
 })
 export class DialogListComponent implements OnInit, OnDestroy {
-  isDialogSelected = false;
 
   dialogListItems: DialogListItem[];
 
@@ -20,9 +19,6 @@ export class DialogListComponent implements OnInit, OnDestroy {
               private dialogService: DialogService,
               private spinner: SpinnerService,
               private authService: AuthenticationService) {
-    if (sessionStorage.getItem('isDialogSelected')) {
-      this.isDialogSelected = sessionStorage.getItem('isDialogSelected') === 'true';
-    }
   }
 
   ngOnInit(): void {
@@ -90,6 +86,10 @@ export class DialogListComponent implements OnInit, OnDestroy {
   loadUserList(component: CurrentDialogComponent) {
     const dialogId = component.activatedRoute.snapshot.paramMap.get('id');
 
+    if (!this.dialogListItems) {
+      this.dialogListItems = [];
+    }
+
     const item = this.dialogListItems.find((item) => item.id == dialogId);
 
     if (item) {
@@ -97,23 +97,12 @@ export class DialogListComponent implements OnInit, OnDestroy {
     }
 
     this.dialogService.getDialogListItem$(dialogId).subscribe(item => {
-      if (!this.dialogListItems) {
-        this.dialogListItems = [];
-      }
+      // if (!this.dialogListItems) {
+      //   this.dialogListItems = [];
+      // }
 
       this.dialogListItems.unshift(item);
     })
-  }
-
-  set dialogSelected(isSelected: boolean) {
-    sessionStorage.setItem('isDialogSelected', String(isSelected));
-
-    this.isDialogSelected = isSelected;
-  }
-
-  backToDialogs() {
-    this.dialogSelected = false;
-    this.router.navigate(['client/dialogs']);
   }
 
   private sort() {
@@ -126,8 +115,6 @@ export class DialogListComponent implements OnInit, OnDestroy {
   }
 
   private clear() {
-    this.dialogSelected = false;
-
     this.dialogService.deleteEmptyDialogs().subscribe();
   }
 

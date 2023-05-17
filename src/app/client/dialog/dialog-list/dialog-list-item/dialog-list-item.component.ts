@@ -27,7 +27,7 @@ export class DialogListItemComponent implements OnInit, OnDestroy {
   }
 
   get unreadAmount() {
-    return this.dialogListItem.unread_messages_amount > 999 ? '999+' : this.dialogListItem.unread_messages_amount;
+    return this.dialogListItem.unread_messages_amount > 99 ? '99+' : this.dialogListItem.unread_messages_amount;
   }
 
   get fullName() {

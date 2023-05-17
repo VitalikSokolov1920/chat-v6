@@ -1,30 +1,25 @@
 @import '/src/variables';
 
 .dialog__item {
-  border: $border-medium;
-  border-radius: $border-radius-medium;
-
-  display: grid;
+  background-color: inherit;
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  column-gap: 10px;
 
   position: relative;
 
-  grid-template-columns: auto 50px;
-  grid-template-rows: 50px 70px 30px;
-
   white-space: nowrap;
 
-  margin:0 $margin-medium $margin-small 0;
-
-  padding: $padding-small;
-
-  font-size: $font-size-small;
+  padding: $padding-medium;
 
   transition: 0.3s ease-in-out;
 
   cursor: pointer;
 
   &_active {
-    background: $active;
+    background: $base-6;
   }
 
   &_image {
@@ -33,91 +28,84 @@
 
     object-fit: cover;
 
-    grid-row: 1;
-    grid-column: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column: 1;
 
     border-radius: 50%;
 
     background: inherit;
   }
 
-  &_name {
-    font-size: inherit;
+  &_info {
+    display: grid;
 
-    grid-row: 1;
-    grid-column: 1;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr auto;
 
-    padding: $padding-large;
+    width: calc(100% - 50px);
 
-    background: inherit;
+    background-color: inherit;
+    &__name {
+      font-size: inherit;
+      background-color: inherit;
 
-    text-overflow: ellipsis;
+      grid-row: 1;
+      grid-column-start: 1;
+      grid-column-end: 3;
 
-    overflow: hidden;
+      text-overflow: ellipsis;
+
+      overflow: hidden;
+
+      font-weight: 600;
+    }
+    &__message {
+      font-size: inherit;
+      background-color: inherit;
+
+      width: 100%;
+      height: 100%;
+
+      grid-row: 2;
+      grid-column-start: 1;
+      grid-column-end: 4;
+
+      word-wrap: anywhere;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      overflow: hidden;
+    }
   }
 
   &_online {
-    grid-column: 1;
-    grid-row: 3;
+    position: absolute;
+    bottom: 6px;
+    right: 0;
 
-    background: $base-1;
-
-    height: 25px;
-    width: 25px;
+    height: 12px;
+    width: 12px;
 
     border-radius: 50%;
-    border: $border-medium-white;
-  }
-
-  &_message {
-    font-size: inherit;
-
-    width: 100%;
-    height: 100%;
-
-    grid-row: 2;
-    grid-column-start: 1;
-    grid-column-end: 3;
-
-    word-wrap: anywhere;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    overflow: hidden;
-
-    padding: $padding-large;
-
-    background: inherit;
-  }
-
-  &_time {
-    background: inherit;
-
-    font-size: $font-size-small;
-
-    text-align: left;
-
-    padding: $padding-small;
-
-    grid-column: 1;
-    grid-row: 3;
+    border: 1px solid $base-7;
+    background-color: $base-7;
   }
 
   &_unread-amount {
-    font-size: $font-size-small;
+    font-size: 11px;
 
     display: inline-block;
 
-    width: 50px;
-    height: 30px;
+    min-width: 19px;
 
-    background: inherit;
+    background: #999999;
+    color: #FFFFFF;
 
-    padding: $padding-small;
+    padding: 4px;
 
-    border: $border-medium-white;
-    border-radius: $border-radius-medium;
+    border-radius: 50%;
 
     text-align: center;
 
@@ -128,39 +116,39 @@
   }
 }
 
-@media (max-width: $desktop-medium-max) and (min-width: $desktop-medium-min){
-  .dialog__item {
-
-  }
-}
-
-@media (max-width: $desktop-small-max) {
-  .dialog__item {
-    grid-template-columns: 25% 50% 25%;
-    grid-template-rows: repeat(3, auto);
-
-    &_image {
-      grid-column: 1;
-      grid-row-start: 1;
-      grid-row-end: 3;
-    }
-    &_name {
-      grid-row: 1;
-      grid-column: 2;
-    }
-    &_message {
-      grid-column-start: 2;
-      grid-column-end: 3;
-
-      grid-row: 2;
-    }
-    &_time {
-      grid-column: 3;
-      grid-row: 3;
-    }
-    &_unread-amount {
-      grid-row: 1;
-      grid-column: 3;
-    }
-  }
-}
+//@media (max-width: $desktop-medium-max) and (min-width: $desktop-medium-min){
+//  .dialog__item {
+//
+//  }
+//}
+//
+//@media (max-width: $desktop-small-max) {
+//  .dialog__item {
+//    grid-template-columns: 25% 50% 25%;
+//    grid-template-rows: repeat(3, auto);
+//
+//    &_image {
+//      grid-column: 1;
+//      grid-row-start: 1;
+//      grid-row-end: 3;
+//    }
+//    &_name {
+//      grid-row: 1;
+//      grid-column: 2;
+//    }
+//    &_message {
+//      grid-column-start: 2;
+//      grid-column-end: 3;
+//
+//      grid-row: 2;
+//    }
+//    &_time {
+//      grid-column: 3;
+//      grid-row: 3;
+//    }
+//    &_unread-amount {
+//      grid-row: 1;
+//      grid-column: 3;
+//    }
+//  }
+//}

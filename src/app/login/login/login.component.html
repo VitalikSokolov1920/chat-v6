@@ -1,25 +1,16 @@
-<button class="btn-navigate" routerLink="/registration">
-  Регистрация
-</button>
-<div class="form" [formGroup]="formGroup">
-  <div class="form__item form__item-margin-bot-large">
-    <input placeholder=" " class="form__item_input" formControlName="login">
-    <label class="form__item_label">
-      Логин
-    </label>
-  </div>
-  <div class="form__item">
-    <input placeholder=" " class="form__item_input" formControlName="password">
-    <label class="form__item_label">
-      Пароль
-    </label>
-  </div>
-  <div class="form__item">
-    <button class="form__item_btn" (click)="authorize()">
+<div class="content">
+  <div class="header">Авторизация</div>
+  <div class="form" [formGroup]="formGroup">
+    <input placeholder="Логин" class="form__item" formControlName="login">
+    <input placeholder="Пароль" type="password" class="form__item" formControlName="password">
+    <button class="form__item form__item_btn" (click)="authorize()">
       Войти
     </button>
-  </div>
-  <div class="form__item_error" *ngIf="errorMessage">
-    {{errorMessage}}
+    <button class="form__item form__item_btn" (click)="authorize()">
+      Регистрация
+    </button>
+    <div class="form__item_error" *ngIf="errorMessage">
+      {{errorMessage}}
+    </div>
   </div>
 </div>

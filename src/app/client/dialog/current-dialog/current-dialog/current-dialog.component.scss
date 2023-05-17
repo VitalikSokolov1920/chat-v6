@@ -2,21 +2,30 @@
 @import '../../../../../variables';
 
 .user-info {
-  font-size: $font-size-medium;
-  padding: $padding-large 40px;
+  font-size: 14px;
+  height: 77px;
   max-width: 100%;
-
-  border: $border-medium;
-  border-radius: $border-radius-medium;
+  background-color: #F1F1F1;
 
   cursor: pointer;
 
   transition: 0.3s ease-in-out;
 
-  margin:0 0 10px;
+  //&:hover {
+  //  background: $base-7;
+  //  color: $base-4;
+  //}
+}
 
-  &:hover {
-    background: $active;
+.dialog-container {
+  background-color: #FFFFFF;
+
+  padding-top: 10px;
+
+  height: 650px;
+
+  & * {
+    background-color: inherit;
   }
 }
 
@@ -39,9 +48,11 @@
 }
 
 .send-message {
-  margin: $margin-medium $margin-medium 0;
+  margin: 10px 20px 20px;
 
-  width: 100%;
+  font-size: 14px;
+
+  height: 39px;
 
   display: flex;
   &__input {
@@ -52,48 +63,51 @@
 
     resize: none;
 
-    border: $border-medium;
-    border-radius: $border-radius-medium;
+    border: 1px solid #F1F1F1;
+    border-radius: 2px;
+    background-color: #FFFFFF;
   }
   &__send {
     width: 10%;
-    height: 65px;
 
-    border: $border-medium;
-    border-radius: $border-radius-medium;
+    cursor: pointer;
 
-    background-image: url(/assets/images/send-message.svg);
+    background-image: url(/assets/images/send-message2.svg);
     background-repeat: no-repeat;
     background-position: center;
 
     transition: 0.3s ease-in-out;
-
-    &:hover, &:active {
-      background-color: $active;
-    }
   }
 }
 
 @media (min-width: $desktop-min) {
+  .dialog-container {
+    height: 650px;
+  }
   .dialog {
-    height: 700px;
-    margin-left: 10px;
+    height: calc(650px - 69px);
 
     overflow: auto;
   }
 }
 
 @media (max-width: $desktop-medium-max) and (min-width: $desktop-small-min) {
-  .dialog {
+  .dialog-container {
     height: 550px;
+  }
+  .dialog {
+    height: calc(550px - 69px);
 
     overflow: auto;
   }
 }
 
 @media (max-width: $phone-max) {
-  .dialog {
+  .dialog-container {
     height: 400px;
+  }
+  .dialog {
+    height: calc(400px - 69px);
 
     overflow: auto;
   }
@@ -104,8 +118,5 @@
     &__input {
       width: 85%;
     }
-  }
-  .user-info {
-    margin: 0 5px 10px 0;
   }
 }

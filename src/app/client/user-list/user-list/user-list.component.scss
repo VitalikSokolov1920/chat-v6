@@ -3,10 +3,11 @@
 .select-group {
   width: 50%;
 
-  margin-bottom: $margin-medium;
+  margin-bottom: $margin-large;
 }
 
 .user-list {
+  background: inherit;
   width: 100%;
   display: grid;
 
@@ -38,7 +39,7 @@
 
 @media (max-width: $phone-max) {
   .user-list {
-    width: 400px;
+    width: 100%;
 
     margin: 0 auto;
 

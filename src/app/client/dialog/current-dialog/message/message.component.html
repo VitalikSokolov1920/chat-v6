@@ -1,36 +1,30 @@
-<div class="dialog__item" *ngIf="message"
-     [ngClass]="{
-       'dialog__item_left': !isAuthUserSend,
-       'dialog__item_right': isAuthUserSend
-     }">
-  <div class="dialog__item_name"
-    [ngClass]="{
-      'dialog__item_name_left': !isAuthUserSend,
-      'dialog__item_name_right': isAuthUserSend
-    }"
-    [routerLink]="['/client/client-page/', sendFromUser.id]">
-    {{sendFromUser.last_name}} {{sendFromUser.first_name}}
+<ng-container *ngIf="isAuthUserSend">
+  <div class="dialog__item dialog__item_right" *ngIf="message">
+    <div class="dialog__item_name dialog__item_name_right" [routerLink]="['/client/client-page/', sendFromUser.id]">
+      {{sendFromUser.last_name}} {{sendFromUser.first_name}}
+    </div>
+    <img alt="" [src]="getImageSrc()" class="dialog__item_image dialog__item_image_right">
+    <div class="dialog__item_message">
+      {{message.message_text}}
+    </div>
+    <div class="dialog__item_date-send dialog__item_date-send_right">
+      {{message.timestamp | date : 'shortTime'}}
+    </div>
+      <div *ngIf="!message.is_read" class="dialog__item_is-unread-right dialog__item_is-unread"></div>
   </div>
-  <img
-    [ngClass]="{
-      'dialog__item_image_left': !isAuthUserSend,
-      'dialog__item_image_right': isAuthUserSend
-    }"
-    alt="" [src]="getImageSrc()" class="dialog__item_image">
-  <div class="dialog__item_message">
-    {{message.message_text}}
+</ng-container>
+<ng-container *ngIf="!isAuthUserSend">
+  <div class="dialog__item dialog__item_left" *ngIf="message">
+    <div class="dialog__item_name dialog__item_name_left" [routerLink]="['/client/client-page/', sendFromUser.id]">
+      {{sendFromUser.last_name}} {{sendFromUser.first_name}}
+    </div>
+    <img alt="" [src]="getImageSrc()" class="dialog__item_image dialog__item_image_left">
+    <div class="dialog__item_message">
+      {{message.message_text}}
+    </div>
+    <div class="dialog__item_date-send dialog__item_date-send_left">
+      {{message.timestamp | date : 'shortTime'}}
+    </div>
+      <div *ngIf="!message.is_read" class="dialog__item_is-unread-left dialog__item_is-unread"></div>
   </div>
-  <div class="dialog__item_date-send"
-       [ngClass]="{
-      'dialog__item_date-send_left': !isAuthUserSend,
-      'dialog__item_date-send_right': isAuthUserSend
-    }">
-    {{message.timestamp | date:'shortTime'}}
-  </div>
-<!--  <div [ngClass]="{-->
-<!--    'dialog__item_is-unread': !message.is_read,-->
-<!--    'dialog__item_is-read': message.is_read,-->
-<!--    'dialog__item_is-unread-left': !isAuthUserSend,-->
-<!--    'dialog__item_is-unread-right': isAuthUserSend }">-->
-<!--  </div>-->
-</div>
+</ng-container>

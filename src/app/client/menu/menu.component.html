@@ -1,43 +1,22 @@
-<div [close-on]="'click'" (emit)="showMobileMenu = false">
-  <div class="show-menu-btn"
-       (click)="showMobileMenu = !showMobileMenu"
-       [ngClass]="{ 'show-menu-btn_move-right': showMobileMenu }">
-    <span class="show-menu-btn__middle-line"></span>
-  </div>
-  <div class="menu" [ngClass]="{'menu_show': showMobileMenu}">
-    <div class="
-      menu__item
-      menu__item_font-size-large
-      menu__item_padding-large
-      menu__item_margin-large
-      menu__item_border-right" (click)="showMobileMenu = false"
+<div>
+  <div class="menu">
+    <div class="menu__item"
       [routerLink]="['client-page', authUser.id]" routerLinkActive="menu__item_active">
       Моя страница
     </div>
-    <div class="
-      menu__item
-      menu__item_font-size-large
-      menu__item_padding-large
-      menu__item_margin-large
-      menu__item_border-right" (click)="showMobileMenu = false"
+    <div class="menu__item"
       routerLink="dialogs" routerLinkActive="menu__item_active">
       Диалоги
     </div>
-    <div class="
-      menu__item
-      menu__item_font-size-large
-      menu__item_padding-large
-      menu__item_margin-large
-      menu__item_border-right" (click)="showMobileMenu = false"
+    <div class="menu__item"
       routerLink="users" routerLinkActive="menu__item_active">
       Друзья
     </div>
-    <div class="
-      menu__item
-      menu__item_font-size-large
-      menu__item_padding-large
-      menu__item_margin-large
-      menu__item_border-right" (click)="logout()">
+    <div class="menu__item"
+         routerLink="users" routerLinkActive="menu__item_active">
+      Сообщества
+    </div>
+    <div class="menu__item" (click)="logout()">
       Выйти
     </div>
   </div>

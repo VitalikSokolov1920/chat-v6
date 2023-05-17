@@ -14,19 +14,7 @@
   outline: none;
 }
 
-::-webkit-scrollbar {
-  background: $base-1;
 
-  border-radius: 15px;
-
-  width: 7px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: $active;
-
-  border-radius: 15px;
-}
 
 .empty-message {
   position: absolute;

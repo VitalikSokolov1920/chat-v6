@@ -80,7 +80,8 @@
         width: 50px;
         height: 50px;
 
-        border: $border-medium;
+        border: 1px solid $base-7;
+        background-color: $base-7;
 
         animation-duration: 2s;
         animation-timing-function: ease-in-out;

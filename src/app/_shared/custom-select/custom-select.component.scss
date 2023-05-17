@@ -3,14 +3,14 @@
 .select-container {
   position: relative;
 
-  font-size: $font-size-small;
+  font-size: 14px;
 
   .select-item {
     font-size: inherit;
 
     padding: $padding-medium;
 
-    border-bottom: $border-medium;
+    border-bottom: 1px solid $base-7;
 
     cursor: pointer;
   }
@@ -18,7 +18,7 @@
   .select-options {
     font-size: inherit;
 
-    min-width: 100%;
+    min-width: 120px;
     max-height: 300px;
 
     overflow: auto;
@@ -27,7 +27,7 @@
 
     z-index: 5;
 
-    background: $active;
+    background: $base-6;
 
     margin-top: 5px;
     padding: $padding-medium;
@@ -37,7 +37,7 @@
       font-size: inherit;
       background: inherit;
 
-      padding: $padding-large-x;
+      padding: $padding-large;
 
       cursor: pointer;
 
@@ -46,7 +46,7 @@
       transition: 0.3s ease-in-out;
 
       &:hover, &:active {
-        background: $bg-color;
+        color: $base-7;
       }
     }
   }

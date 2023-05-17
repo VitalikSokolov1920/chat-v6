@@ -1,88 +1,31 @@
 @import '/src/variables';
 
-.dialogs {
-  position: relative;
-
-  display: flex;
-
-  margin-left: $margin-large;
-
-  .dialog-list {
-    width: 25%;
-
-    height: 750px;
-
-    overflow: auto;
-  }
-  .back-to-dialog-list-btn {
-    display: none;
-  }
-  .current-dialog {
-    width: 75%;
-  }
-}
-
-
-
-@media (max-width: $desktop-small-max) {
-  .dialogs {
-    flex-direction: column;
-
-    margin: 0 $margin-small;
-
-    .back-to-dialog-list-btn {
-      display: block;
-      margin-left: $margin-large;
-
-      width: 75px;
-      height: 50px;
-
-      object-fit: cover;
+.dialogs-container {
+  border-radius: 5px;
+  background-color: #F1F1F1;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 1fr auto;
+  .dialogs__list {
+    grid-column: 1;
+    &-items {
+      grid-row: 2;
     }
-
-    .dialog-list {
-      max-width: 100%;
-
-      position: relative;
-
-      transition: 0.3s cubic-bezier(1, -0.7, 1, .99);
-
-      &_show {
-        width: 100%;
-
-        height: 100%;
-
-        left: 0;
-      }
-
-      &_close {
-        width: 0;
-        overflow: hidden;
-
-        height: 0;
-
-        left: -100%;
+    .dialogs__search-container {
+      height: 77px;
+      .dialogs__search {
+        width: calc(100% - 44px);
+        grid-row: 1;
+        font-size: 14px;
+        border-radius: 30px;
+        margin: 21px;
+        border: 1px solid #979DAC;
+        padding: 9px 20px;
       }
     }
 
-    .current-dialog {
-      position: relative;
-      top: 0;
-
-      transition: 0.3s cubic-bezier(1, -0.7, 1, .99);
-
-      &_show {
-        width: 100%;
-
-        right: 0;
-      }
-
-      &_close {
-        width: 0;
-        overflow: hidden;
-
-        right: -100%;
-      }
-    }
+  }
+  & * {
+    background-color: inherit;
   }
 }

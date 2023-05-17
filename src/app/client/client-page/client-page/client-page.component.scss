@@ -3,89 +3,82 @@
 .page {
   width: 100%;
 
-  &_name {
-    font-size: $font-size-medium-x;
+  background-color: $base-6;
 
-    border-bottom: $border-medium;
+  padding: 10px;
+
+  border: 1px solid $base-6;
+  border-radius: 20px;
+
+  &_name {
+    background: inherit;
+    font-size: 24px;
 
     width: 50%;
   }
 
   &__image {
-    width: 50%;
-    max-height: 400px;
+    width: 110px;
+    height: 110px;
 
-    border: $border-medium;
+    object-fit: cover;
 
-    object-fit: contain;
+    border-radius: 20px;
 
     margin: $margin-large 0;
   }
   .cooperation {
     display: flex;
 
-    justify-content: space-between;
+    justify-content: left;
+    background: inherit;
+    gap: 10px;
     &__btn {
-      width: 50%;
-
-      line-height: 70px;
-
-      background: $active;
+      background: inherit;
+      border-bottom: 1px solid $base-7;
+      padding: 5px 7px;
 
       text-align: center;
 
       cursor: pointer;
-
-      transition: 0.3s ease-in-out;
-
-      &:hover {
-        background: $base-5;
-      }
-      &:first-child {
-        margin-right: 10px;
-      }
     }
   }
 }
 
-@media (max-width: $desktop-medium-max) and (min-width: $desktop-small-min) {
-  .page {
-    &_name {
-      width: 100%;
-      padding-left: $padding-large;
-    }
-    &__image {
-      margin: $margin-large calc(25% / 2);
-      width: 75%;
-      max-height: 600px;
-    }
-  }
-}
-
-//@media (max-width: $desktop-small-max) and (min-width: $desktop-small-min) {
-//
+//@media (max-width: $desktop-medium-max) and (min-width: $desktop-small-min) {
+//  .page {
+//    &_name {
+//      width: 100%;
+//      padding-left: $padding-large;
+//    }
+//    &__image {
+//      margin: $margin-large calc(25% / 2);
+//      width: 75%;
+//      max-height: 600px;
+//    }
+//  }
 //}
-
-@media (max-width: $phone-max) {
-  .page {
-    &_name {
-      width: 100%;
-      padding: $padding-small;
-      font-size: $font-size-medium;
-    }
-    &__image {
-      width: 100%;
-      max-height: 600px;
-    }
-    .cooperation {
-      flex-direction: column;
-      &__btn {
-        width: 100%;
-
-        &:not(:last-child) {
-          margin-bottom: $margin-medium;
-        }
-      }
-    }
-  }
-}
+//
+//@media (max-width: $phone-max) {
+//  .page {
+//    &_name {
+//      width: 100%;
+//      padding: $padding-small;
+//      font-size: $font-size-medium;
+//    }
+//    &__image {
+//      width: 100%;
+//      max-height: 600px;
+//    }
+//    .cooperation {
+//      flex-direction: column;
+//      &__btn {
+//        width: 100%;
+//
+//        &:not(:last-child) {
+//          margin-bottom: $margin-medium;
+//        }
+//      }
+//    }
+//  }
+//}
