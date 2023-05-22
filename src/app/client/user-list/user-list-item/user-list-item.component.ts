@@ -51,17 +51,17 @@ export class UserListItemComponent implements OnInit {
         title: 'Написать сообщение',
         value: 1,
       }
-    }
-    if (this.user.is_friends) {
-      this.selectOptions[1] = {
-        title: 'Удалить из друзей',
-        value: 3
-      };
-    } else {
-      this.selectOptions[1] = {
-        title: 'Добавить в друзья',
-        value: 2
-      };
+      if (this.user.is_friends) {
+        this.selectOptions[1] = {
+          title: 'Удалить из друзей',
+          value: 3
+        };
+      } else {
+        this.selectOptions[1] = {
+          title: 'Добавить в друзья',
+          value: 2
+        };
+      }
     }
   }
 
