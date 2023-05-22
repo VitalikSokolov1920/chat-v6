@@ -1,35 +1,40 @@
-<button class="btn-navigate" routerLink="/login">
-  Авторизация
-</button>
-<div class="container">
+<div class="content">
+  <div class="header">Регистрация</div>
   <div class="form" [formGroup]="regGroup">
-    <div class="control col-1 row-1 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
-      <input placeholder=" " formControlName="firstName" class="control__input">
-      <label class="control__label">Имя</label>
-    </div>
-    <div class="control col-1 row-2 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
-      <input placeholder=" " formControlName="lastName" class="control__input">
-      <label class="control__label">Фамилия</label>
-    </div>
-    <div class="control col-1 row-3 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
-      <input placeholder=" " formControlName="login" class="control__input">
-      <label class="control__label">Логин</label>
-    </div>
-    <div class="control col-1 row-4 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
-      <input placeholder=" " type="password" formControlName="password" class="control__input">
-      <label class="control__label">Пароль</label>
-    </div>
-    <div class="control col-1 row-5 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">
-      <input placeholder=" " type="password" formControlName="repeatPassword" class="control__input">
-      <label class="control__label">Повторите пароль</label>
-    </div>
-    <div class="control control_p-small col-2 row-1 control_bordered control_bordered-radius-medium control_w100">
+    <input placeholder="Имя" class="form__item" formControlName="firstName">
+<!--    <div class="control col-1 row-1 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">-->
+<!--      <input placeholder=" " formControlName="firstName" class="control__input">-->
+<!--      <label class="control__label">Имя</label>-->
+<!--    </div>-->
+    <input placeholder="Фамилия" class="form__item" formControlName="lastName">
+<!--    <div class="control col-1 row-2 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">-->
+<!--      <input placeholder=" " formControlName="lastName" class="control__input">-->
+<!--      <label class="control__label">Фамилия</label>-->
+<!--    </div>-->
+    <input placeholder="Логин" class="form__item" formControlName="login">
+<!--    <div class="control col-1 row-3 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">-->
+<!--      <input placeholder=" " formControlName="login" class="control__input">-->
+<!--      <label class="control__label">Логин</label>-->
+<!--    </div>-->
+    <input placeholder="Пароль" class="form__item" formControlName="password">
+<!--    <div class="control col-1 row-4 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">-->
+<!--      <input placeholder=" " type="password" formControlName="password" class="control__input">-->
+<!--      <label class="control__label">Пароль</label>-->
+<!--    </div>-->
+    <input placeholder="Повторите пароль" class="form__item" formControlName="repeatPassword">
+<!--    <div class="control col-1 row-5 control_bordered-radius-medium control_p-large-xx control_bordered control_w100">-->
+<!--      <input placeholder=" " type="password" formControlName="repeatPassword" class="control__input">-->
+<!--      <label class="control__label">Повторите пароль</label>-->
+<!--    </div>-->
+    <div class="image-loader">
+      <img alt="" *ngIf="image.value != null"
+           [src]="image.value"
+           class="image-loader__image">
       <app-custom-image-picker (success)="setImage($event)"></app-custom-image-picker>
     </div>
-    <img alt="" *ngIf="image.value != null"
-         [src]="image.value"
-         class="control control_bordered control_bordered-radius-medium col-2 row-2-5 control_w100 image">
+
+    <button [disabled]="regGroup.invalid" (click)="registration()" class="form__item form__item_btn">Зарегистрироваться</button>
+    <button routerLink="/login" class="form__item form__item_btn">У меня уже аккаунт</button>
+    <div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
   </div>
-  <button (click)="registration()" class="btn btn_p-large-x btn_center btn_margin-vertical-large btn_bordered btn_bordered-radius-medium">Зарегистрироваться</button>
-  <div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
 </div>

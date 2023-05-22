@@ -1,11 +1,16 @@
 <div *ngIf="otherUser" class="user-info" [routerLink]="['/client/client-page', otherUser.id]">
-  !!! добавить фото !!! {{fullName}}
+  <img alt="Фото" [src]="otherUser.image" class="user-info__image"/>
+  <div class="user-info__name">
+    {{fullName}}
+  </div>
 </div>
 <div class="dialog-container">
   <ng-container *ngIf="dialog">
     <div class="dialog" #scroll (scroll)="scrollTop()">
-      <app-message *ngFor="let message of dialog; let i = index"
+      <app-message [id]="message.id" *ngFor="let message of dialog; let i = index"
                    [message]="message"
+                   (visible)="onMessageVisible($event)"
+                   [messageId]="message.id"
                    [sendFromUser]="message.send_from_id == authUser.id ? authUser : otherUser"
                    [isAuthUserSend]="message.send_from_id == authUser.id"
       ></app-message>

@@ -1,16 +1,18 @@
-<div class="select-group">
-  <app-custom-select
-    [defaultItem]="selectItems[0]"
-    [items]="selectItems"
-    [showSelectedItem]="true"
-    [showDefaultItem]="true"
-    (selected)="changeUsersCategory($event)">
-  </app-custom-select>
+<div class="select-group-container">
+  <div class="select-group">
+    <app-custom-select
+      [defaultItem]="selectItems[0]"
+      [items]="selectItems"
+      [showSelectedItem]="true"
+      [showDefaultItem]="true"
+      (selected)="changeUsersCategory($event)">
+    </app-custom-select>
+  </div>
 </div>
 <div class="user-list">
   <app-user-list-item [user]="user" *ngFor="let user of userList"></app-user-list-item>
   <div class="empty-message" *ngIf="!userList || userList.length == 0">
-    <div class="empty-message__text">Не удалось найти пользователей.</div>
-    <div class="empty-message__link" (click)="trySearch()">Повторить попытку</div>
+    <img class="empty-message__img" alt="" src="/assets/images/warning.svg">
+    <div class="empty-message__text">Список пуст</div>
   </div>
 </div>
