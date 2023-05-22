@@ -6,7 +6,7 @@
       <img [src]="dialogListItem.image"
            alt=""
            class="dialog__item_image">
-      <div class="dialog__item_online"></div>
+      <div *ngIf="dialogListItem.is_online" class="dialog__item_online"></div>
     </div>
 
     <div class="dialog__item_info">
