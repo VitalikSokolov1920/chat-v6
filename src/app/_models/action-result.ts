@@ -1,7 +1,7 @@
-export class ActionResult {
+export class ActionResult<T> {
   actionResult: boolean;
 
-  result: any;
+  result: T;
 
   error?: string;
 }
