@@ -1,0 +1,11 @@
+<div class="community-bar">
+  <div class="community-bar__items">
+    <button routerLinkActive="community-bar__items_active" routerLink="all">Все сообщества</button>
+    <button routerLinkActive="community-bar__items_active" routerLink="my">Мои сообщества</button>
+    <button routerLinkActive="community-bar__items_active" routerLink="create">Создать сообщество</button>
+  </div>
+  <input placeholder="Найти" class="community-bar__search">
+</div>
+<div class="community-container">
+  <router-outlet></router-outlet>
+</div>

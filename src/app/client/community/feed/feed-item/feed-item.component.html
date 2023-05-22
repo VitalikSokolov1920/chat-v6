@@ -1,0 +1,112 @@
+<div class="feed-wrapper">
+  <div (appIsHeightMore)="isShowMoreBtn($event)" class="feed-container"
+       [ngClass]="{'show-all': isShowAll, 'hidden': !isShowAll}">
+    <div class="feed-header">
+      <img class="feed-header__image" alt="" [src]="feed.image"/>
+      <span class="feed-header__community-name">
+      {{feed.community_name}}
+    </span>
+      <span class="feed-header__post-time">
+      {{feed.post_time}}
+    </span>
+      <div class="feed-header__manage"></div>
+    </div>
+    <div class="description">
+      <div class="text">{{feed.text}}</div>
+      <div style="background: inherit">
+        <ul class="image-gallery">
+          <li>
+            <img class="image" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+          </li>
+          <li>
+            <img class="image" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+          </li>
+          <li>
+            <img class="image" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+          </li>
+          <li>
+            <img class="image" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+          </li>
+          <li>
+            <img class="image" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+          </li>
+          <li>
+            <img class="image" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <button (click)="onShowBtnClick()" *ngIf="showMoreBtn" class="show">{{showMsgText}}</button>
+</div>
+<div class="comment-container">
+<!--  <div class="comment-wrapper">-->
+<!--    -->
+<!--  </div>-->
+  <div [maxHeight]="250" [ngClass]="{'comments-show-all': isShowAllComment, 'comments-hide': !isShowAllComment}" (appIsHeightMore)="isShowMoreCommentBtn($event)" class="comments">
+    <div class="comment-info">
+      {{feed.comment_count}}
+    </div>
+    <div class="comment">
+      <img class="comment__avatar" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+      <div class="comment__info">
+        <div>Соколов Виталий</div>
+        <div class="comment__time">2023-19-05 12:05</div>
+      </div>
+      <div class="comment__text">
+        asddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddas
+      </div>
+    </div>
+    <div class="comment">
+      <img class="comment__avatar" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+      <div class="comment__info">
+        <div>Соколов Виталий</div>
+        <div class="comment__time">2023-19-05 12:05</div>
+      </div>
+      <div class="comment__text">
+        asddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddas
+      </div>
+    </div>
+    <div class="comment">
+      <img class="comment__avatar" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+      <div class="comment__info">
+        <div>Соколов Виталий</div>
+        <div class="comment__time">2023-19-05 12:05</div>
+      </div>
+      <div class="comment__text">
+        asddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddas
+      </div>
+    </div>
+    <div class="comment">
+      <img class="comment__avatar" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+      <div class="comment__info">
+        <div>Соколов Виталий</div>
+        <div class="comment__time">2023-19-05 12:05</div>
+      </div>
+      <div class="comment__text">
+        asddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddas
+      </div>
+    </div>
+    <div class="comment">
+      <img class="comment__avatar" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+      <div class="comment__info">
+        <div>Соколов Виталий</div>
+        <div class="comment__time">2023-19-05 12:05</div>
+      </div>
+      <div class="comment__text">
+        asddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddas
+      </div>
+    </div>
+    <div class="comment">
+      <img class="comment__avatar" alt="" [src]="'/assets/images/test-community-img.jpg'"/>
+      <div class="comment__info">
+        <div>Соколов Виталий</div>
+        <div class="comment__time">2023-19-05 12:05</div>
+      </div>
+      <div class="comment__text">
+        asddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddasasddasvasddasasddasasddasasddasasddasasddasasddas
+      </div>
+    </div>
+  </div>
+  <button (click)="onShowBtnCommentClick()" *ngIf="showMoreCommentBtn" class="show">{{showMsgCommentText}}</button>
+</div>

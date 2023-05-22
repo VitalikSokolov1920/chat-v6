@@ -1,0 +1,93 @@
+@import "/src/variables";
+
+.current-community-header {
+  background: #FFFFFF;
+  border: 1px solid #979DAC;
+  border-radius: 10px;
+  width: 100%;
+
+  &__image {
+    width: 100%;
+    height: 300px;
+    background: inherit;
+    object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+  }
+  &__info {
+    background: inherit;
+    width: 100%;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    &-name {
+      font-size: 30px;
+      background: inherit;
+    }
+    .manage-btn {
+      background: $base-7;
+      padding: 12px;
+      color: #FFFFFF;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+  }
+  .community-members-amount {
+    color: #33415C;
+    padding-left: 20px;
+    padding-bottom: 15px;
+    background: inherit;
+  }
+
+  .description {
+    background: inherit;
+    padding-left: 20px;
+    padding-bottom: 15px;
+  }
+
+  .admins {
+    background: inherit;
+    color: #777777;
+    padding-left: 20px;
+    margin-bottom: 15px;
+  }
+}
+
+.community-bar {
+  background-color: #FFFFFF;
+  margin-top: 15px;
+  height: 53px;
+  border-radius: 10px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  border: 1px solid #979DAC;
+  padding-left: 30px;
+  margin-bottom: 15px;
+
+  &__items {
+    background-color: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 20px;
+    padding-left: 10px;
+
+    &_active {
+      border-bottom: 1px solid $base-7;
+      color: $base-7 !important;
+    }
+
+    button {
+      background-color: inherit;
+      height: 41px;
+      cursor: pointer;
+      font-family: 'Inter', serif;
+      font-style: normal;
+      font-weight: 600;
+      color: #777777;
+    }
+  }
+}

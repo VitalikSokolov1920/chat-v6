@@ -1,0 +1,43 @@
+@import '/src/variables';
+
+.community-bar {
+  background-color: #FFFFFF;
+  height: 53px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  &__items {
+    background-color: inherit;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    gap: 20px;
+    padding-left: 10px;
+
+    &_active {
+      border-bottom: 1px solid $base-7;
+    }
+
+    button {
+      background-color: inherit;
+      height: 41px;
+      cursor: pointer;
+    }
+  }
+  &__search {
+    margin-left: auto;
+    margin-right: 10px;
+    width: 220px;
+    background: inherit;
+    height: 41px;
+    border: 1px solid #979DAC;
+    border-radius: 30px;
+    padding: 9px 20px;
+  }
+}
+
+.community-container {
+  padding-top: 30px;
+}

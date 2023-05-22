@@ -4,6 +4,8 @@ import {MenuComponent} from "./menu/menu.component";
 import {ClientPageComponent} from "./client-page/client-page/client-page.component";
 import {UserListComponent} from "./user-list/user-list/user-list.component";
 import {AuthGuard} from "../guards/auth.guard";
+import {CommunityWrapperComponent} from "./community/community-wrapper/community-wrapper.component";
+import {UserFeedComponent} from "./user-feed/user-feed/user-feed.component";
 
 const routes: Routes = [
   {
@@ -16,12 +18,20 @@ const routes: Routes = [
         loadChildren: () => import('./dialog/dialog.module').then(m => m.DialogModule),
       },
       {
+        path: 'feed',
+        component: UserFeedComponent
+      },
+      {
         path: 'client-page/:id',
         component: ClientPageComponent,
       },
       {
         path: 'users',
         component: UserListComponent
+      },
+      {
+        path: 'community',
+        loadChildren: () => import('./community/community.module').then(m => m.CommunityModule),
       },
       {
         path: '**',

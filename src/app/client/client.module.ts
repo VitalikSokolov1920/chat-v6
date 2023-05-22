@@ -11,6 +11,8 @@ import {environment} from "../../environments/environment";
 import {SocketModule} from "../socket/socket.module";
 import {SharedModule} from "../_shared/shared.module";
 import { MenuItemComponent } from './menu/menu-item/menu-item.component';
+import {CommunityModule} from "./community/community.module";
+import {UserFeedModule} from "./user-feed/user-feed.module";
 
 registerLocaleData(localeRu);
 
@@ -28,8 +30,10 @@ const socketConfig: SocketConfig = {
     CommonModule,
     ClientPageModule,
     UserListModule,
+    CommunityModule,
     SocketModule.forRoot(socketConfig),
-    SharedModule
+    SharedModule,
+    UserFeedModule
   ],
   declarations: [
     MenuComponent,

@@ -1,0 +1,23 @@
+<div class="current-community-header">
+  <img class="current-community-header__image" alt="" [src]="'assets/images/test-community-img.jpg'"/>
+  <div class="current-community-header__info">
+    <div class="current-community-header__info-name">
+      Название сообщества
+    </div>
+    <button class="manage-btn">Покинуть/Вступить</button>
+  </div>
+  <div class="community-members-amount">
+    Количество участников: 190
+  </div>
+  <div class="description">
+    Это сообщество является сообщество с количество участников равным 190 человек
+  </div>
+  <div class="admins">Администраторы сообщества: !!! тут список фоток админов !!!</div>
+</div>
+<div class="community-bar">
+  <div class="community-bar__items">
+    <button routerLinkActive="community-bar__items_active" routerLink="feed">Лента новостей</button>
+    <button routerLinkActive="community-bar__items_active" routerLink="members">Участники</button>
+  </div>
+</div>
+<router-outlet></router-outlet>

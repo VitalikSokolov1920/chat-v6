@@ -1,0 +1,16 @@
+<div [formGroup]="communityGroup" class="create-container">
+  <div class="header">Создание сообщества</div>
+  <div class="sub-header">Название и описание</div>
+  <input formControlName="name" placeholder="Название" id="community_name"/>
+  <textarea formControlName="description" rows="4" placeholder="Описание" id="community_description"></textarea>
+  <button (click)="checkCommunityName()" [disabled]="communityGroup.invalid" class="complete-btn">Проверить</button>
+  <div *ngIf="communityNameError" class="error">Сообщество с таким названием уже существует</div>
+  <div class="sub-header">Изображение сообщества</div>
+  <div class="community-image">
+    <img *ngIf="image" class="community-image__show" alt="" [src]="image"/>
+  </div>
+  <app-custom-image-picker (error)="setCommunityImageError($event)" (success)="setCommunityImage($event)"></app-custom-image-picker>
+  <div *ngIf="showImageError" class="error">Ошибка при загрузке изображения</div>
+  <button (click)="create()" [disabled]="communityGroup.invalid" class="complete-btn">Создать</button>
+  <div *ngIf="communityCreateErrorMsg" class="error">{{communityCreateErrorMsg}}</div>
+</div>

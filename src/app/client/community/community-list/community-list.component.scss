@@ -1,0 +1,9 @@
+.community-list__container {
+  display: flex;
+  flex-direction: row;
+  gap: 17px;
+  flex-wrap: wrap;
+}
+.community-list__item {
+  flex-basis: calc(25% - 51px / 4);
+}
