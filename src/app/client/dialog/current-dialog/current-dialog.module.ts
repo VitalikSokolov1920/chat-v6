@@ -5,11 +5,13 @@ import {CommonModule} from "@angular/common";
 import {ReactiveFormsModule} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {SharedModule} from "../../../_shared/shared.module";
+import { VisibleDirective } from './message/visible.directive';
 
 @NgModule({
   declarations: [
     CurrentDialogComponent,
     MessageComponent,
+    VisibleDirective,
   ],
   imports: [
     CommonModule,

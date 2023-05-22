@@ -2,12 +2,17 @@ import {NgModule} from "@angular/core";
 import {RouterModule, Routes} from "@angular/router";
 import {DialogListComponent} from "./dialog-list/dialog-list.component";
 import {CurrentDialogComponent} from "./current-dialog/current-dialog/current-dialog.component";
+import {CreateRoomComponent} from "./create-room/create-room.component";
 
 const routes: Routes = [
   {
     path: '',
     component: DialogListComponent,
     children: [
+      {
+        path: 'create-room',
+        component: CreateRoomComponent
+      },
       {
         path: ':id',
         component: CurrentDialogComponent

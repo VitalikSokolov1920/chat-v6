@@ -29,3 +29,14 @@
     background-color: inherit;
   }
 }
+
+.create-room {
+  background: $base-7 !important;
+  padding: 12px;
+  color: #FFFFFF;
+  border-radius: 10px;
+  cursor: pointer;
+  display: block;
+  width: calc(100% - 42px);
+  margin: 21px;
+}

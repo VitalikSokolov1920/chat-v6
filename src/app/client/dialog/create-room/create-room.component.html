@@ -1,0 +1,22 @@
+<div [formGroup]="roomGroup" class="create-container">
+  <div class="header">Создание беседы</div>
+  <div class="sub-header">Название</div>
+  <input formControlName="name" placeholder="Название" id="community_name"/>
+  <div class="sub-header">Фотография беседы</div>
+  <div class="community-image">
+    <img *ngIf="image" class="community-image__show" alt="" [src]="image"/>
+  </div>
+  <app-custom-image-picker (success)="getImage($event)" (error)="getImageLoadError()"></app-custom-image-picker>
+  <div *ngIf="imageLoadError" class="error">Ошибка при загрузке изображения</div>
+  <div class="friends">
+    <div *ngFor="let friend of friends" class="friends__item">
+      <img class="friends__item-image" alt="" [src]="getFriendImage(friend)"/>
+      <div class="friends__item-name">
+        {{friend.name}}
+      </div>
+      <button (click)="changeFriendState(friend)" class="friends__item-add">{{friend.action}}</button>
+    </div>
+  </div>
+  <button [disabled]="roomGroup.invalid || !addFriend.length" (click)="create()" class="complete-btn">Создать</button>
+  <div *ngIf="createRoomError" class="error">{{createRoomError}}</div>
+</div>

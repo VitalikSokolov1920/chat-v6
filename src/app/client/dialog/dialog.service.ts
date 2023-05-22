@@ -16,8 +16,15 @@ export class DialogService {
   constructor(private http: HttpClient,
               @Inject(SOCKET) private socket: Socket) {}
 
-  getDialogListItems$() {
-    return this.http.get<DialogListItem[]>(`${environment.apiUrl}/dialog-list`);
+  getDialogListItems$(search?: string) {
+    if (!search) {
+      return this.http.get<DialogListItem[]>(`${environment.apiUrl}/dialog-list`);
+    } else {
+      const params = {
+        search
+      };
+      return this.http.get<DialogListItem[]>(`${environment.apiUrl}/dialog-list`, { params });
+    }
   }
 
   getDialogListItem$(dialogItemId: string) {
@@ -42,6 +49,14 @@ export class DialogService {
 
   waitAllMessagesRead() {
     return this.socket.on<AllMessagesRead>('allMessagesRead');
+  }
+
+  waitUserOffline() {
+    return this.socket.on<string>("userOffline");
+  }
+
+  waitUserOnline() {
+    return this.socket.on<string>("userOnline");
   }
 
   sendMessage(messageText: string, sendFromId: string, sendToId: string) {
@@ -71,9 +86,9 @@ export class DialogService {
     return this.http.get<any>(`${environment.apiUrl}/dialog-messages-count`, { params });
   }
 
-  markAllMessagesAsRead(otherUserId: string) {
-    return this.socket.emitOnce('allMessagesRead', { otherUserId });
-  }
+  // markAllMessagesAsRead(otherUserId: string) {
+  //   return this.socket.emitOnce('allMessagesRead', { otherUserId });
+  // }
 
   markMessageRead(messageId: string, sendFromId: string, sendToId: string) {
     return this.socket.emitOnce<string>('messageRead', { messageId, sendFromId, sendToId });

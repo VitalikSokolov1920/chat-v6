@@ -5,6 +5,9 @@ import {DialogListItem} from "../../../_models";
 import {AuthenticationService} from "../../../_services/authentication.service";
 import {SpinnerService} from "../../../spinner/spinner.service";
 import {CurrentDialogComponent} from "../current-dialog/current-dialog/current-dialog.component";
+import {FormControl} from "@angular/forms";
+import {debounceTime} from "rxjs";
+import {CreateRoomService} from "../create-room/create-room.service";
 
 @Component({
   selector: 'app-dialog-list',
@@ -13,19 +16,53 @@ import {CurrentDialogComponent} from "../current-dialog/current-dialog/current-d
 })
 export class DialogListComponent implements OnInit, OnDestroy {
 
-  dialogListItems: DialogListItem[];
+  dialogListItems: DialogListItem[] = [];
+
+  dialogsLoad = false;
+
+  searchControl: FormControl;
 
   constructor(private router: Router,
               private dialogService: DialogService,
               private spinner: SpinnerService,
+              private createRoomService: CreateRoomService,
               private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
+    this.searchControl = new FormControl('');
+
+    this.searchControl.valueChanges.pipe(debounceTime(1000)).subscribe(value => {
+      this.dialogService.getDialogListItems$(value).subscribe((dialogList) => {
+        this.dialogListItems = dialogList;
+      });
+    });
     this.dialogService.getDialogListItems$().subscribe((dialogList) => {
       this.dialogListItems = dialogList;
 
+      this.dialogsLoad = true;
+
       this.spinner.hide();
+    });
+
+    this.dialogService.waitUserOffline().subscribe((userId) => {
+      const user = this.dialogListItems.find(item => {
+        return item.id == userId;
+      });
+
+      if (user) {
+        user.is_online = false;
+      }
+    });
+
+    this.dialogService.waitUserOnline().subscribe((userId) => {
+      const user = this.dialogListItems.find(item => {
+        return item.id == userId;
+      });
+
+      if (user) {
+        user.is_online = true;
+      }
     });
 
     this.dialogService.waitChangeLastMessage$().subscribe(lastMessage => {
@@ -74,35 +111,40 @@ export class DialogListComponent implements OnInit, OnDestroy {
 
     this.dialogService.waitUpdateUnreadMessagesAmount$().subscribe(unreadAmount => {
       const item = this.dialogListItems.find((item) => {
-        return item.id == unreadAmount.sendFromId;
+        return item.id == unreadAmount.sendToId;
       });
 
-      const index = this.dialogListItems.indexOf(item);
+      if (item) {
+        item.unread_messages_amount = unreadAmount.unreadMessagesAmount;
+      }
+    });
 
-      this.dialogListItems[index].unread_messages_amount = unreadAmount.unreadMessagesAmount;
-    })
+    this.createRoomService.getLastCreatedRoomId().subscribe(id => {
+      if (id) {
+
+      }
+    });
   }
 
+  // TODO: эта функция может запускаться только тогда, когда получен список диалогов DONE
   loadUserList(component: CurrentDialogComponent) {
-    const dialogId = component.activatedRoute.snapshot.paramMap.get('id');
+    if (component instanceof CurrentDialogComponent) {
+      const dialogId = component.activatedRoute.snapshot.paramMap.get('id');
 
-    if (!this.dialogListItems) {
-      this.dialogListItems = [];
+      if (!this.dialogListItems) {
+        this.dialogListItems = [];
+      }
+
+      const item = this.dialogListItems.find((item) => item.id == dialogId);
+
+      if (item) {
+        return;
+      }
+
+      this.dialogService.getDialogListItem$(dialogId).subscribe(item => {
+        this.dialogListItems.unshift(item);
+      });
     }
-
-    const item = this.dialogListItems.find((item) => item.id == dialogId);
-
-    if (item) {
-      return;
-    }
-
-    this.dialogService.getDialogListItem$(dialogId).subscribe(item => {
-      // if (!this.dialogListItems) {
-      //   this.dialogListItems = [];
-      // }
-
-      this.dialogListItems.unshift(item);
-    })
   }
 
   private sort() {
@@ -115,11 +157,12 @@ export class DialogListComponent implements OnInit, OnDestroy {
   }
 
   private clear() {
-    this.dialogService.deleteEmptyDialogs().subscribe();
+    this.dialogService.deleteEmptyDialogs().subscribe(() => {
+      console.log('deleted');
+    });
   }
 
   ngOnDestroy() {
     this.clear();
   }
-
 }

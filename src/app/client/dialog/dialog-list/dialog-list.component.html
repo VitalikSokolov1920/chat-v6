@@ -36,8 +36,9 @@
   <div class="dialogs__list">
 <!--    поиск-->
     <div class="dialogs__search-container">
-      <input class="dialogs__search" placeholder="Поиск">
+      <input [formControl]="searchControl" class="dialogs__search" placeholder="Поиск">
     </div>
+    <button routerLink="create-room" class="create-room">Создать беседу</button>
     <div class="dialogs__list-items">
       <app-dialog-list-item routerLinkActive="item-active"
                             [dialogListItem]="dialogItem"
@@ -47,6 +48,6 @@
   </div>
 <!--  текущий диалог-->
   <div class="current-dialog">
-    <router-outlet (activate)="loadUserList($event)" ></router-outlet>
+    <router-outlet *ngIf="dialogsLoad" (activate)="loadUserList($event)"></router-outlet>
   </div>
 </div>
