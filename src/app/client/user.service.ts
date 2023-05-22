@@ -51,11 +51,11 @@ export class UserService {
     );
   }
 
-  addToFriends$(id: string): Observable<ActionResult> {
-    return this.http.patch<ActionResult>(`${environment.apiUrl}/add-friend`, { id });
+  addToFriends$(id: string): Observable<ActionResult<boolean>> {
+    return this.http.patch<ActionResult<boolean>>(`${environment.apiUrl}/add-friend`, { id });
   }
 
-  removeFromFriends$(id: string): Observable<ActionResult> {
-    return this.http.patch<ActionResult>(`${environment.apiUrl}/remove-friend`, { id });
+  removeFromFriends$(id: string): Observable<ActionResult<boolean>> {
+    return this.http.patch<ActionResult<boolean>>(`${environment.apiUrl}/remove-friend`, { id });
   }
 }
