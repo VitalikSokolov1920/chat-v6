@@ -1,0 +1,9 @@
+<div class="user-list">
+  <app-user-list-item [user]="user" *ngFor="let user of userList"></app-user-list-item>
+  <div class="empty-message" *ngIf="!userList || userList.length == 0">
+    <img class="empty-message__img" alt="" src="/assets/images/warning.svg">
+    <div class="empty-message__text">
+      Список участников пуст
+    </div>
+  </div>
+</div>
