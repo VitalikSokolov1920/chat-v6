@@ -1,7 +1,7 @@
 <label>
-  <input type="file" accept="image/*" (change)="fileChanged($event)">
+  <input type="file" accept="{{type}}" (change)="fileChanged($event)">
   <img src="assets/images/file_upload.svg" alt="">
   <span>
-    Загрузить фотографию
+    {{description}}
   </span>
 </label>

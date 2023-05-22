@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-custom-image-picker',
@@ -11,6 +11,11 @@ export class CustomImagePickerComponent implements OnInit {
   success = new EventEmitter<string | ArrayBuffer>();
   @Output()
   error = new EventEmitter<any>();
+
+  @Input()
+  description = 'Загрузить фотографию';
+  @Input()
+  type = 'image/*';
 
   constructor() {}
 
