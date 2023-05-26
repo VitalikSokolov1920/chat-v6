@@ -80,6 +80,10 @@ export class CreateRoomComponent implements OnInit {
       this.createRoomService.createRoom(name, friendIds, img).subscribe(result => {
         if (result.actionResult) {
           this.createRoomService.setLastCreatedRoomId(result.result);
+          this.roomGroup.reset('');
+          this.image = '';
+
+          this.createRoomService.newRoomCreated$(result.result, friendIds).subscribe();
         } else {
           this.createRoomError = result.error;
         }
@@ -88,6 +92,9 @@ export class CreateRoomComponent implements OnInit {
       this.createRoomService.createRoom(name, friendIds).subscribe(result => {
         if (result.actionResult) {
           this.createRoomService.setLastCreatedRoomId(result.result);
+          this.roomGroup.reset('');
+
+          this.createRoomService.newRoomCreated$(result.result, friendIds).subscribe();
         } else {
           this.createRoomError = result.error;
         }

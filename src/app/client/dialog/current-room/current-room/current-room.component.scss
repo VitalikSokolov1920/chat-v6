@@ -1,0 +1,113 @@
+@import "/src/variables";
+
+.room-info {
+  font-size: 14px;
+  height: 77px;
+  max-width: 100%;
+  background-color: #F1F1F1;
+
+  cursor: pointer;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 20px;
+
+  &__image {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+  }
+  &__name {
+    font-size: 16px;
+  }
+}
+
+.room-container {
+  background-color: #FFFFFF;
+
+  padding-top: 10px;
+
+  height: 650px;
+
+  & * {
+    background-color: inherit;
+  }
+}
+
+.send-message {
+  margin: 10px 20px 20px;
+
+  font-size: 14px;
+
+  height: 39px;
+
+  display: flex;
+  &__input {
+    width: 90%;
+    outline: none;
+
+    padding: $padding-small;
+
+    resize: none;
+
+    border: 1px solid #F1F1F1;
+    border-radius: 2px;
+    background-color: #FFFFFF;
+  }
+  &__send {
+    width: 10%;
+
+    cursor: pointer;
+
+    background-image: url(/assets/images/send-message2.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+
+    transition: 0.3s ease-in-out;
+  }
+}
+
+@media (min-width: $desktop-min) {
+  .room-container {
+    height: 650px;
+  }
+  .room {
+    height: calc(650px - 69px);
+
+    overflow: auto;
+  }
+}
+
+@media (max-width: $desktop-medium-max) and (min-width: $desktop-small-min) {
+  .room-container {
+    height: 550px;
+  }
+  .room {
+    height: calc(550px - 69px);
+
+    overflow: auto;
+  }
+}
+
+@media (max-width: $phone-max) {
+  .room-container {
+    height: 400px;
+  }
+  .room {
+    height: calc(400px - 69px);
+
+    overflow: auto;
+  }
+  .send-message {
+    &__send {
+      width: 15%;
+    }
+    &__input {
+      width: 85%;
+    }
+  }
+}

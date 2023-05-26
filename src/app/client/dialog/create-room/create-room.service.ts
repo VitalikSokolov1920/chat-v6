@@ -1,23 +1,36 @@
-import {forwardRef, Injectable} from '@angular/core';
+import {forwardRef, Inject, Injectable} from '@angular/core';
 import {DialogModule} from "../dialog.module";
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, Observable, ReplaySubject} from "rxjs";
-import {ActionResult, Image, User} from "../../../_models";
+import {BehaviorSubject, Observable} from "rxjs";
+import {ActionResult, Image} from "../../../_models";
 import {environment} from "../../../../environments/environment";
 import {Friend} from "../../../_models/friend";
-import {Room} from "../../../_models/room";
+import {RoomListItem} from "../../../_models/room-list-item";
+import {Socket} from "../../../socket/socket";
+import {SOCKET} from "../../../socket/socket.module";
 
 @Injectable({
   providedIn: forwardRef(() => DialogModule)
 })
 export class CreateRoomService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+              @Inject(SOCKET) private socket: Socket) {
+    this.waitNewRoomCreated();
+  }
 
   private lastRoom = new BehaviorSubject<string>(null);
 
   getLastCreatedRoomId() {
     return this.lastRoom;
+  }
+
+  private waitNewRoomCreated() {
+    this.socket.on<string>('newRoomCreated').subscribe(roomId => {
+      if (roomId) {
+        this.setLastCreatedRoomId(roomId);
+      }
+    })
   }
 
   setLastCreatedRoomId(id: string) {
@@ -29,7 +42,7 @@ export class CreateRoomService {
       id
     };
 
-    return this.http.get<ActionResult<Room>>(`${environment.apiUrl}/get-room`, {params});
+    return this.http.get<ActionResult<RoomListItem>>(`${environment.apiUrl}/get-room`, {params});
   }
 
   getFriendList(): Observable<ActionResult<Friend[]>> {
@@ -42,6 +55,10 @@ export class CreateRoomService {
     } else {
       return this.http.post<ActionResult<string>>(`${environment.apiUrl}/create-room`, {name, member_ids});
     }
+  }
+
+  newRoomCreated$(roomId: string, socketMembersIds: string[]) {
+    return this.socket.emitOnce<string>('newRoomCreated', {roomId, socketMembersIds});
   }
 }
 

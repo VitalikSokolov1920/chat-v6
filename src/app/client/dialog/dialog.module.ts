@@ -7,6 +7,7 @@ import {CurrentDialogModule} from "./current-dialog/current-dialog.module";
 import {ReactiveFormsModule} from "@angular/forms";
 import { CreateRoomComponent } from './create-room/create-room.component';
 import {SharedModule} from "../../_shared/shared.module";
+import {CurrentRoomModule} from "./current-room/current-room.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {SharedModule} from "../../_shared/shared.module";
         CommonModule,
         CurrentDialogModule,
         ReactiveFormsModule,
-        SharedModule
+        SharedModule,
+      CurrentRoomModule
     ]
 })
 export class DialogModule {}

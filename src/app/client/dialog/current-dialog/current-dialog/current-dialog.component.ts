@@ -94,7 +94,7 @@ export class CurrentDialogComponent implements OnInit, OnDestroy, AfterViewCheck
         map(count => {
           this.totalCount = count.total_count;
 
-          if (this.totalCount - 25 * this.multiplier < 25) {
+          if (this.totalCount - 25 * this.multiplier <= 0) {
             this.sliceParams = {
               limit: 25,
               offset: 0
@@ -115,11 +115,6 @@ export class CurrentDialogComponent implements OnInit, OnDestroy, AfterViewCheck
           return id;
         })
       )),
-      // mergeMap((id) => this.dialogService.markAllMessagesAsRead(id).pipe(
-      //   map(() => {
-      //     return id;
-      //   })
-      // )),
       mergeMap((id) => this.dialogService.getDialog$(id, this.sliceParams)),
     ).subscribe((response) => {
       this.getAllDialog = response.isEnd;
@@ -129,40 +124,11 @@ export class CurrentDialogComponent implements OnInit, OnDestroy, AfterViewCheck
       this.dialog.unshift(...response.items);
 
       this.spinner.hide();
-
-      // this.dialogService.waitAllMessagesRead().pipe(take(1)).subscribe(unreadObj => {
-      //   if (this.authUser.id == unreadObj.authUserId && this.otherUser.id == unreadObj.otherUserId) {
-      //     console.log("read by auth user");
-      //     this.dialog.map(msg => {
-      //       if (msg.send_from_id == this.authUser.id)
-      //         msg.is_read = true;
-      //     });
-      //   }
-        // if (!unreadObj.toSendSocket) {
-        //   if (unreadObj.authUserId == this.authUser.id && unreadObj.otherUserId == this.otherUser.id) {
-        //     this.dialog.forEach((message) => {
-        //       if (message.send_from_id == this.authUser.id) {
-        //         message.is_read = true;
-        //       }
-        //     })
-        //   }
-        // } else {
-        //   if (unreadObj.authUserId == this.otherUser.id && unreadObj.otherUserId == this.authUser.id) {
-        //     this.dialog.forEach((message) => {
-        //       if (message.send_from_id == this.authUser.id) {
-        //         message.is_read = true;
-        //       }
-        //     })
-        //   }
-        // }
-      // });
     });
 
     this.dialogService.waitMessage$().pipe(takeUntil(this.unsubscribe$)).subscribe((message) => {
       if (String(message.send_from_id) == this.otherUser.id || String(message.send_from_id) == this.authUser.id) {
         this.dialog.push(message);
-
-        this.scrolled = false;
       }
     });
 
@@ -170,14 +136,6 @@ export class CurrentDialogComponent implements OnInit, OnDestroy, AfterViewCheck
       this.dialog.find((item) => {
         return item.id == messageId;
       }).is_read = true;
-
-      // const message = this.dialog.find((item) => {
-      //   return item.id == messageId;
-      // });
-      //
-      // const index = this.dialog.indexOf(message);
-      //
-      // this.dialog[index].is_read = true;
     });
   }
 
