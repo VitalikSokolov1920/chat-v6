@@ -51,11 +51,35 @@ export class UserService {
     );
   }
 
-  addToFriends$(id: string): Observable<ActionResult<boolean>> {
-    return this.http.patch<ActionResult<boolean>>(`${environment.apiUrl}/add-friend`, { id });
+  // отправить запрос в друзья(для отправителя)
+  sendRequestToFriends$(id: string): Observable<ActionResult<boolean>> {
+    return this.http.patch<ActionResult<boolean>>(`${environment.apiUrl}/add-friend-request`, { id });
   }
 
-  removeFromFriends$(id: string): Observable<ActionResult<boolean>> {
-    return this.http.patch<ActionResult<boolean>>(`${environment.apiUrl}/remove-friend`, { id });
+  // отменить запрос в друзья(и для отправителя, и для получателя)
+  cancelFriendRequest$(requestFrom: string, requestTo: string): Observable<ActionResult<boolean>> {
+    return this.http.patch<ActionResult<boolean>>(`${environment.apiUrl}/remove-friend-request`, { requestFrom, requestTo });
+  }
+
+  getFriendRequestsToUser$() {
+    return this.http.get<ActionResult<User[]>>(`${environment.apiUrl}/friend-request-list-to-user`);
+  }
+
+  getFriendRequestsFromUser$() {
+    return this.http.get<ActionResult<User[]>>(`${environment.apiUrl}/friend-request-list-from-user`);
+  }
+
+  // принять запрос в друзья
+  applyFriendRequest$(requestToId: string, requestFromId: string) {
+    const params = {
+      requestToId,
+      requestFromId
+    };
+
+    return this.http.post<ActionResult<boolean>>(`${environment.apiUrl}/apply-friend-request`, {...params});
+  }
+
+  removeFromFriends(userId: string) {
+    return this.http.post<ActionResult<boolean>>(`${environment.apiUrl}/delete-from-friends`, {userId})
   }
 }

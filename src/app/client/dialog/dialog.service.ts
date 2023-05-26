@@ -47,10 +47,6 @@ export class DialogService {
     return this.socket.on<ChangeUnreadAmount>('changeUnreadMessagesAmount');
   }
 
-  waitAllMessagesRead() {
-    return this.socket.on<AllMessagesRead>('allMessagesRead');
-  }
-
   waitUserOffline() {
     return this.socket.on<string>("userOffline");
   }
@@ -85,10 +81,6 @@ export class DialogService {
 
     return this.http.get<any>(`${environment.apiUrl}/dialog-messages-count`, { params });
   }
-
-  // markAllMessagesAsRead(otherUserId: string) {
-  //   return this.socket.emitOnce('allMessagesRead', { otherUserId });
-  // }
 
   markMessageRead(messageId: string, sendFromId: string, sendToId: string) {
     return this.socket.emitOnce<string>('messageRead', { messageId, sendFromId, sendToId });

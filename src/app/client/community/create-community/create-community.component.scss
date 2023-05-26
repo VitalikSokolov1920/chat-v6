@@ -23,21 +23,21 @@
   font-weight: 500;
 }
 
-.complete-btn {
-  margin-top: 15px;
-  color: #FFFFFF;
-  background: $base-7;
-  border: 1px solid $base-7;
-  border-radius: 10px;
-  padding: 8px 16px;
-  cursor: pointer;
-
-  &[disabled] {
-    cursor: auto;
-    background: #878F9D;
-    border: 1px solid #878F9D;
-  }
-}
+//.complete-btn {
+//  margin-top: 15px;
+//  color: #FFFFFF;
+//  background: $base-7;
+//  border: 1px solid $base-7;
+//  border-radius: 10px;
+//  padding: 8px 16px;
+//  cursor: pointer;
+//
+//  &[disabled] {
+//    cursor: auto;
+//    background: #878F9D;
+//    border: 1px solid #878F9D;
+//  }
+//}
 
 #community_name, #community_description {
   background: inherit;

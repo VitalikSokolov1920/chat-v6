@@ -6,6 +6,7 @@ import {UserListComponent} from "./user-list/user-list/user-list.component";
 import {AuthGuard} from "../guards/auth.guard";
 import {CommunityWrapperComponent} from "./community/community-wrapper/community-wrapper.component";
 import {UserFeedComponent} from "./user-feed/user-feed/user-feed.component";
+import {FriendRequestComponent} from "./user-list/friend-request/friend-request.component";
 
 const routes: Routes = [
   {
@@ -27,7 +28,16 @@ const routes: Routes = [
       },
       {
         path: 'users',
-        component: UserListComponent
+        children: [
+          {
+            path: 'list',
+            component: UserListComponent
+          },
+          {
+            path: 'friend-request',
+            component: FriendRequestComponent
+          }
+        ],
       },
       {
         path: 'community',
