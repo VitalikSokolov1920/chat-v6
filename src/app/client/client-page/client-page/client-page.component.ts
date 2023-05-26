@@ -85,7 +85,7 @@ export class ClientPageComponent implements OnInit {
   }
 
   addToFriends() {
-    this.userService.addToFriends$(this.user.id).subscribe(result => {
+    this.userService.sendRequestToFriends$(this.user.id).subscribe(result => {
       if (result.actionResult) {
         this.user.is_friends = true;
       } else {
@@ -95,7 +95,7 @@ export class ClientPageComponent implements OnInit {
   }
 
   removeFromFriends() {
-    this.userService.removeFromFriends$(this.user.id).subscribe(result => {
+    this.userService.cancelFriendRequest$(this.authService.authUser.id, this.user.id).subscribe(result => {
       if (result.actionResult) {
         this.user.is_friends = false;
       } else {
