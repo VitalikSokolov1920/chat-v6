@@ -5,3 +5,9 @@ export class ActionResult<T> {
 
   error?: string;
 }
+
+export class ActionResultSliceParamsResponse<T> extends ActionResult<T>{
+  isEnd?: boolean;
+  // общее количество элементов
+  total_count?: number;
+}

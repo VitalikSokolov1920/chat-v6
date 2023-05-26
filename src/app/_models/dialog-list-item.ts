@@ -6,21 +6,21 @@ export class DialogListItemInfo {
 }
 
 export class DialogListItem extends DialogListItemInfo{
-  last_name: string; // только для диалога
-  first_name: string; // только для диалога
+  last_name?: string; // только для диалога
+  first_name?: string; // только для диалога
 
   image?: string | SafeUrl;
 
-  timestamp: string;
+  timestamp?: string;
 
-  id: string; // -1, если это беседа
-  last_message: string;
+  id?: string; // -1, если это беседа
+  last_message?: string;
   unread_messages_amount?: number;
 
-  is_online: boolean;
+  is_online?: boolean; // только для диалогов
 
-  room_id: string; // -1, если это диалог
-  room_name: string; // только для бесед
+  room_id?: string; // -1, если это диалог
+  room_name?: string; // только для бесед
 
   toSendingSocket?: boolean
 }
