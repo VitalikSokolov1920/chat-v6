@@ -8,9 +8,10 @@
       (selected)="changeUsersCategory($event)">
     </app-custom-select>
   </div>
+  <button routerLink="../friend-request" class="complete-btn">Заявки в друзья</button>
 </div>
 <div class="user-list">
-  <app-user-list-item [user]="user" *ngFor="let user of userList"></app-user-list-item>
+  <app-user-list-item (delete)="deleteFromList(user)" [user]="user" *ngFor="let user of userList"></app-user-list-item>
   <div class="empty-message" *ngIf="!userList || userList.length == 0">
     <img class="empty-message__img" alt="" src="/assets/images/warning.svg">
     <div class="empty-message__text">Список пуст</div>

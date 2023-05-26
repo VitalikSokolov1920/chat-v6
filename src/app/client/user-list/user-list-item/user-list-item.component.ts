@@ -1,8 +1,7 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from "@angular/router";
-import {UserListItem} from "../../../_models";
+import {User, UserListItem} from "../../../_models";
 import {SelectItem} from "../../../_shared/custom-select/custom-select.component";
-import {DomSanitizer} from "@angular/platform-browser";
 import {AuthenticationService} from "../../../_services/authentication.service";
 import {UserService} from "../../user.service";
 
@@ -14,13 +13,16 @@ import {UserService} from "../../user.service";
 export class UserListItemComponent implements OnInit {
   @Input()
   user: UserListItem;
+  authUser: User;
 
   showMenu = false;
 
   selectOptions: SelectItem[];
 
+  @Output('delete')
+  deleteEmit = new EventEmitter();
+
   constructor(private router: Router,
-              public sanitizer: DomSanitizer,
               private authService: AuthenticationService,
               private userService: UserService) {}
 
@@ -28,6 +30,8 @@ export class UserListItemComponent implements OnInit {
     this.userService.getUserImage$(this.user.id).subscribe(image => {
       this.user.image = image;
     });
+
+    this.authUser = this.authService.authUser;
 
     this.selectOptions  = [
       {
@@ -46,6 +50,12 @@ export class UserListItemComponent implements OnInit {
   }
 
   private restoreSelect() {
+    this.selectOptions  = [
+      {
+        title: 'Перейти на страницу',
+        value: 0,
+      }
+    ];
     if (this.user.id != this.authService.authUser.id) {
       this.selectOptions[2] = {
         title: 'Написать сообщение',
@@ -57,10 +67,26 @@ export class UserListItemComponent implements OnInit {
           value: 3
         };
       } else {
-        this.selectOptions[1] = {
-          title: 'Добавить в друзья',
-          value: 2
-        };
+        if (this.user.is_requested_friends_from_auth_user) {
+          this.selectOptions[1] = {
+            title: 'Отменить запрос в друзья',
+            value: 4
+          }
+        } else if (this.user.is_requested_friends_to_auth_user) {
+          this.selectOptions[1] = {
+            title: 'Отклонить запрос в друзья',
+            value: 5
+          }
+          this.selectOptions[3] = {
+            title: 'Принять запрос в друзья',
+            value: 6
+          }
+        } else {
+          this.selectOptions[1] = {
+            title: 'Добавить в друзья',
+            value: 2
+          };
+        }
       }
     }
   }
@@ -82,10 +108,24 @@ export class UserListItemComponent implements OnInit {
         this.navigateToDialog();
         break;
       case 2:
-        this.addToFriends();
+        // Добавить в друзья
+        this.addRequestToFriends();
         break;
       case 3:
+        // Удалить из друзей
         this.removeFromFriends();
+        break;
+      case 4:
+        // Отменить запрос в друзья
+        this.cancelRequestFromFriends(this.authUser.id, this.user.id);
+        break;
+      case 5:
+        // Отклонить запрос в друзья
+        this.cancelRequestFromFriends(this.user.id, this.authUser.id);
+        break;
+      case 6:
+        // Принять запрос в друзья
+        this.acceptFriendRequest();
         break;
     }
   }
@@ -94,9 +134,25 @@ export class UserListItemComponent implements OnInit {
     this.router.navigate(['client/dialogs', this.user.id]);
   }
 
-  removeFromFriends() {
-    this.userService.removeFromFriends$(this.user.id).subscribe(result => {
+  cancelRequestFromFriends(requestFrom: string, requestTo: string) {
+    this.userService.cancelFriendRequest$(requestFrom, requestTo).subscribe(result => {
       if (result.actionResult) {
+        this.user.is_friends = false;
+        this.user.is_requested_friends_from_auth_user = false;
+        this.user.is_requested_friends_to_auth_user = false;
+
+        this.restoreSelect();
+      } else {
+        // добавить обработку ошибок
+      }
+    });
+  }
+
+  addRequestToFriends() {
+    this.userService.sendRequestToFriends$(this.user.id).subscribe(result => {
+      if (result.actionResult) {
+        this.user.is_requested_friends_from_auth_user = true;
+        this.user.is_requested_friends_to_auth_user = false;
         this.user.is_friends = false;
 
         this.restoreSelect();
@@ -106,10 +162,12 @@ export class UserListItemComponent implements OnInit {
     });
   }
 
-  addToFriends() {
-    this.userService.addToFriends$(this.user.id).subscribe(result => {
+  acceptFriendRequest() {
+    this.userService.applyFriendRequest$(this.user.id, this.authUser.id).subscribe(result => {
       if (result.actionResult) {
         this.user.is_friends = true;
+        this.user.is_requested_friends_from_auth_user = false;
+        this.user.is_requested_friends_to_auth_user = false;
 
         this.restoreSelect();
       } else {
@@ -118,4 +176,19 @@ export class UserListItemComponent implements OnInit {
     });
   }
 
+  removeFromFriends() {
+    this.userService.removeFromFriends(this.user.id).subscribe(result => {
+      if (result.actionResult) {
+        this.deleteEmit.emit();
+
+        this.user.is_friends = false;
+        this.user.is_requested_friends_from_auth_user = false;
+        this.user.is_requested_friends_to_auth_user = false;
+
+        this.restoreSelect();
+      } else {
+        // добавить обработку ошибок
+      }
+    })
+  }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SelectItem} from "../../../_shared/custom-select/custom-select.component";
-import {SELECT_ITEM, UserListItem} from "../../../_models";
+import {SELECT_ITEM, User, UserListItem} from "../../../_models";
 import {UserListService} from "../user-list.service";
 import {take} from "rxjs";
 import {SpinnerService} from "../../../spinner/spinner.service";
@@ -45,6 +45,10 @@ export class UserListComponent implements OnInit {
     this.selectedCategory = selectedCategory;
 
     this.trySearch();
+  }
+
+  deleteFromList(user: User) {
+    this.userList.splice(this.userList.indexOf(user), 1);
   }
 
 }
