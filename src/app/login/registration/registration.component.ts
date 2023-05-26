@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {SpinnerService} from "../../spinner/spinner.service";
 import {AuthenticationService} from "../../_services/authentication.service";
 import {Router} from "@angular/router";
+import {ErrorService} from "../../error/error.service";
 
 @Component({
   selector: 'app-registration',
@@ -11,11 +12,11 @@ import {Router} from "@angular/router";
 })
 export class RegistrationComponent implements OnInit {
   regGroup: FormGroup;
-  errorMessage: string;
 
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               private router: Router,
+              private errorService: ErrorService,
               private spinner: SpinnerService) {}
 
   ngOnInit(): void {
@@ -47,11 +48,10 @@ export class RegistrationComponent implements OnInit {
     const data = this.regGroup.value;
 
     this.authService.registrationUser(data).subscribe((user) => {
-      this.errorMessage = '';
 
       this.router.navigate(['client/dialogs']);
     }, (error) => {
-      this.errorMessage = error.error.errorMessage;
+      this.errorService.show(error.error.errorMessage);
     });
   }
 

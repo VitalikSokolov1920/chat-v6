@@ -9,6 +9,7 @@ import {FormControl} from "@angular/forms";
 import {debounceTime} from "rxjs";
 import {CreateRoomService} from "../create-room/create-room.service";
 import {RoomService} from "../room.service";
+import {ErrorService} from "../../../error/error.service";
 
 @Component({
   selector: 'app-dialog-list',
@@ -27,6 +28,7 @@ export class DialogListComponent implements OnInit, OnDestroy {
               private dialogService: DialogService,
               private spinner: SpinnerService,
               private createRoomService: CreateRoomService,
+              private errorService: ErrorService,
               private roomService: RoomService,
               private authService: AuthenticationService) {
   }
@@ -154,6 +156,8 @@ export class DialogListComponent implements OnInit, OnDestroy {
             };
 
             this.dialogListItems.unshift(dialogItem);
+          } else {
+            this.errorService.show(result.error);
           }
         });
       }

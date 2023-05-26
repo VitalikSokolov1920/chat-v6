@@ -16,6 +16,7 @@ import {FormControl, Validators} from "@angular/forms";
 import {SliceParamsRequest} from "../../../../_models/slice-params";
 import {SpinnerService} from "../../../../spinner/spinner.service";
 import {DOCUMENT} from "@angular/common";
+import {ErrorService} from "../../../../error/error.service";
 
 @Component({
   selector: 'app-current-dialog',
@@ -53,6 +54,7 @@ export class CurrentDialogComponent implements OnInit, OnDestroy, AfterViewCheck
               public activatedRoute: ActivatedRoute,
               private dialogService: DialogService,
               private authService: AuthenticationService,
+              private errorService: ErrorService,
               private userService: UserService,
               private spinner: SpinnerService) {}
 

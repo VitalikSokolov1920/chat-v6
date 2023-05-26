@@ -35,6 +35,5 @@
 
     <button [disabled]="regGroup.invalid" (click)="registration()" class="form__item form__item_btn">Зарегистрироваться</button>
     <button routerLink="/login" class="form__item form__item_btn">У меня уже аккаунт</button>
-    <div class="error" *ngIf="errorMessage">{{errorMessage}}</div>
   </div>
 </div>

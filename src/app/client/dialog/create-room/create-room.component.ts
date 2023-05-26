@@ -5,6 +5,7 @@ import {DomSanitizer, SafeUrl} from "@angular/platform-browser";
 import {CreateRoomService} from "./create-room.service";
 import {Friend} from "../../../_models/friend";
 import {Image} from "../../../_models";
+import {ErrorService} from "../../../error/error.service";
 
 @Component({
   selector: 'app-create-room',
@@ -22,6 +23,7 @@ export class CreateRoomComponent implements OnInit {
 
   constructor(private spinner: SpinnerService,
               private sanitizer: DomSanitizer,
+              private errorService: ErrorService,
               private createRoomService: CreateRoomService,
               private fb: FormBuilder) {}
 
@@ -41,7 +43,7 @@ export class CreateRoomComponent implements OnInit {
           f.isAdd = false;
         });
       } else {
-        this.createRoomError = friends.error;
+        this.errorService.show(friends.error);
       }
     })
   }
@@ -85,7 +87,7 @@ export class CreateRoomComponent implements OnInit {
 
           this.createRoomService.newRoomCreated$(result.result, friendIds).subscribe();
         } else {
-          this.createRoomError = result.error;
+          this.errorService.show(result.error);
         }
       });
     } else {
@@ -96,7 +98,7 @@ export class CreateRoomComponent implements OnInit {
 
           this.createRoomService.newRoomCreated$(result.result, friendIds).subscribe();
         } else {
-          this.createRoomError = result.error;
+          this.errorService.show(result.error);
         }
       });
     }

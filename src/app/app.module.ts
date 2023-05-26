@@ -9,10 +9,11 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {RegistrationModule} from "./login/registration/registration.module";
 import {JwtInterceptor} from "./interceptors/jwt.interceptor";
 import {SpinnerModule} from "./spinner/spinner.module";
+import {ErrorModule} from "./error/error.module";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -21,7 +22,8 @@ import {SpinnerModule} from "./spinner/spinner.module";
     LoginModule,
     HttpClientModule,
     RegistrationModule,
-    SpinnerModule
+    SpinnerModule,
+    ErrorModule,
   ],
   providers: [
     {

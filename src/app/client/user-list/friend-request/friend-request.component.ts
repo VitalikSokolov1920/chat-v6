@@ -3,6 +3,7 @@ import {SpinnerService} from "../../../spinner/spinner.service";
 import {UserService} from "../../user.service";
 import {AuthenticationService} from "../../../_services/authentication.service";
 import {User} from "../../../_models";
+import {ErrorService} from "../../../error/error.service";
 
 @Component({
   selector: 'app-friend-request',
@@ -18,6 +19,7 @@ export class FriendRequestComponent implements OnInit {
 
   constructor(private spinner: SpinnerService,
               private authService: AuthenticationService,
+              private errorService: ErrorService,
               private userService: UserService) {}
 
   ngOnInit(): void {
@@ -31,6 +33,8 @@ export class FriendRequestComponent implements OnInit {
             user.image = image;
           })
         });
+      } else {
+        this.errorService.show(result.error);
       }
       this.userService.getFriendRequestsFromUser$().subscribe(result => {
         if (result.actionResult) {
@@ -41,6 +45,8 @@ export class FriendRequestComponent implements OnInit {
               user.image = image;
             })
           });
+        } else {
+          this.errorService.show(result.error);
         }
       });
       this.spinner.hide();
@@ -51,6 +57,8 @@ export class FriendRequestComponent implements OnInit {
     this.userService.cancelFriendRequest$(this.authUser.id, item.id).subscribe(result => {
       if (result.actionResult) {
         this.friendFromMeRequestList.splice(this.friendFromMeRequestList.indexOf(item), 1);
+      } else {
+        this.errorService.show(result.error);
       }
     });
   }
@@ -59,6 +67,8 @@ export class FriendRequestComponent implements OnInit {
     this.userService.applyFriendRequest$(this.authUser.id, item.id).subscribe(result => {
       if (result.actionResult) {
         this.friendToMeRequestList.splice(this.friendFromMeRequestList.indexOf(item), 1);
+      } else {
+        this.errorService.show(result.error);
       }
     });
   }
@@ -67,6 +77,8 @@ export class FriendRequestComponent implements OnInit {
     this.userService.cancelFriendRequest$(item.id, this.authUser.id).subscribe(result => {
       if (result.actionResult) {
         this.friendToMeRequestList.splice(this.friendFromMeRequestList.indexOf(item), 1);
+      } else {
+        this.errorService.show(result.error);
       }
     });
   }

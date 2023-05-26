@@ -6,6 +6,7 @@ import {map, mergeMap, ReplaySubject, takeUntil} from "rxjs";
 import {AuthenticationService} from "../../../_services/authentication.service";
 import {FormControl} from "@angular/forms";
 import {SpinnerService} from "../../../spinner/spinner.service";
+import {ErrorService} from "../../../error/error.service";
 
 @Component({
   selector: 'app-client-page',
@@ -24,6 +25,7 @@ export class ClientPageComponent implements OnInit {
               private userService: UserService,
               private authService: AuthenticationService,
               private router: Router,
+              private errorService: ErrorService,
               private spinner: SpinnerService) {}
 
   ngOnInit(): void {
@@ -77,7 +79,7 @@ export class ClientPageComponent implements OnInit {
   }
 
   imageLoadError(error: any) {
-    console.log(error);
+    this.errorService.show(error);
   }
 
   navigateToDialog() {
@@ -89,7 +91,7 @@ export class ClientPageComponent implements OnInit {
       if (result.actionResult) {
         this.user.is_friends = true;
       } else {
-        // добавить обработку ошибки
+        this.errorService.show(result.error);
       }
     });
   }
@@ -99,7 +101,7 @@ export class ClientPageComponent implements OnInit {
       if (result.actionResult) {
         this.user.is_friends = false;
       } else {
-        // добавить обработку ошибки
+        this.errorService.show(result.error);
       }
     });
   }

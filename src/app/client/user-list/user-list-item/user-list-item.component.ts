@@ -4,6 +4,7 @@ import {User, UserListItem} from "../../../_models";
 import {SelectItem} from "../../../_shared/custom-select/custom-select.component";
 import {AuthenticationService} from "../../../_services/authentication.service";
 import {UserService} from "../../user.service";
+import {ErrorService} from "../../../error/error.service";
 
 @Component({
   selector: 'app-user-list-item',
@@ -24,6 +25,7 @@ export class UserListItemComponent implements OnInit {
 
   constructor(private router: Router,
               private authService: AuthenticationService,
+              private errorService: ErrorService,
               private userService: UserService) {}
 
   ngOnInit(): void {
@@ -143,7 +145,7 @@ export class UserListItemComponent implements OnInit {
 
         this.restoreSelect();
       } else {
-        // добавить обработку ошибок
+        this.errorService.show(result.error);
       }
     });
   }
@@ -157,7 +159,7 @@ export class UserListItemComponent implements OnInit {
 
         this.restoreSelect();
       } else {
-        // добавить обработку ошибок
+        this.errorService.show(result.error);
       }
     });
   }
@@ -171,7 +173,7 @@ export class UserListItemComponent implements OnInit {
 
         this.restoreSelect();
       } else {
-        // добавить обработку ошибок
+        this.errorService.show(result.error);
       }
     });
   }
@@ -187,7 +189,7 @@ export class UserListItemComponent implements OnInit {
 
         this.restoreSelect();
       } else {
-        // добавить обработку ошибок
+        this.errorService.show(result.error);
       }
     })
   }

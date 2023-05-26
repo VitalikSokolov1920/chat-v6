@@ -10,6 +10,7 @@ import {SliceParamsRequest} from "../../../../_models/slice-params";
 import {User} from "../../../../_models";
 import {AuthenticationService} from "../../../../_services/authentication.service";
 import {DOCUMENT} from "@angular/common";
+import {ErrorService} from "../../../../error/error.service";
 
 @Component({
   selector: 'app-current-room',
@@ -40,6 +41,7 @@ export class CurrentRoomComponent implements OnInit, OnDestroy, AfterViewChecked
               private spinner: SpinnerService,
               private roomService: RoomService,
               private sanitizer: DomSanitizer,
+              private errorService: ErrorService,
               private authService: AuthenticationService,
               private activatedRoute: ActivatedRoute) { }
 
@@ -73,6 +75,8 @@ export class CurrentRoomComponent implements OnInit, OnDestroy, AfterViewChecked
             map(result => {
               if (result.actionResult) {
                 this.room = result.result;
+              } else {
+                this.errorService.show(result.error);
               }
               return this.room.room_id;
             })
@@ -115,6 +119,8 @@ export class CurrentRoomComponent implements OnInit, OnDestroy, AfterViewChecked
                     }
                   }
                 }
+              } else {
+                this.errorService.show(result.error);
               }
 
               return roomId;
@@ -130,6 +136,8 @@ export class CurrentRoomComponent implements OnInit, OnDestroy, AfterViewChecked
                 this.getAllMessages = result.isEnd;
 
                 this.room.roomMessagesCount = result.total_count;
+              } else {
+                this.errorService.show(result.error);
               }
 
               return this.room.room_id;
@@ -142,6 +150,8 @@ export class CurrentRoomComponent implements OnInit, OnDestroy, AfterViewChecked
               if (result.actionResult) {
                 this.room.members = result.result;
                 this.room.roomMembersCount = result.result.length;
+              } else {
+                this.errorService.show(result.error);
               }
 
               return this.room.room_id;
@@ -215,6 +225,8 @@ export class CurrentRoomComponent implements OnInit, OnDestroy, AfterViewChecked
             this.room.messages.unshift(...response.result);
 
             this.dialogElem.nativeElement.scrollTop = 1;
+          } else {
+            this.errorService.show(response.error);
           }
         });
       }

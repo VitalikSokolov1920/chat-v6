@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {AuthenticationService} from "../../_services/authentication.service";
 import {Router} from "@angular/router";
 import {SpinnerService} from "../../spinner/spinner.service";
+import {ErrorService} from "../../error/error.service";
 
 @Component({
   selector: 'app-login',
@@ -11,11 +12,11 @@ import {SpinnerService} from "../../spinner/spinner.service";
 })
 export class LoginComponent implements OnInit {
   formGroup: FormGroup;
-  errorMessage: string;
 
   constructor(private fb: FormBuilder,
               private authService: AuthenticationService,
               private spinner: SpinnerService,
+              private errorService: ErrorService,
               private router: Router) {
     this.formGroup = this.fb.group({
       login: this.fb.control('', [Validators.required]),
@@ -28,9 +29,8 @@ export class LoginComponent implements OnInit {
   }
 
   authorize() {
-    this.errorMessage = '';
     if (this.formGroup.invalid) {
-      this.errorMessage = 'Нужно заполнить все поля ввода';
+      this.errorService.show('Нужно заполнить все поля ввода');
       return;
     }
 
@@ -41,11 +41,11 @@ export class LoginComponent implements OnInit {
       if (user !== null) {
         this.router.navigate(['client/dialogs']);
       } else {
-        this.errorMessage = 'Неверный логин/пароль';
+        this.errorService.show('Неверный логин/пароль');
       }
     }, (error) => {
       console.log(error);
-      this.errorMessage = 'Неверный логин/пароль';
+      this.errorService.show('Неверный логин/пароль');
     });
   }
 }
