@@ -4,6 +4,7 @@ import {DialogService} from "../../dialog.service";
 import {ReplaySubject} from "rxjs";
 import {DomSanitizer} from "@angular/platform-browser";
 import {UserService} from "../../../user.service";
+import {RoomService} from "../../room.service";
 
 @Component({
   selector: 'app-dialog-list-item',
@@ -18,12 +19,31 @@ export class DialogListItemComponent implements OnInit, OnDestroy {
 
   constructor(private dialogService: DialogService,
               private sanitizer: DomSanitizer,
+              private roomService: RoomService,
               private userService: UserService) {}
 
   ngOnInit(): void {
-    this.userService.getUserImage$(this.dialogListItem.id).subscribe(image => {
+    if (Number(this.dialogListItem.room_id) > 0) {
+      this.roomService.getRoomImage$(this.dialogListItem.room_id).subscribe(image => {
         this.dialogListItem.image = image;
-    });
+      })
+    } else {
+      this.userService.getUserImage$(this.dialogListItem.id).subscribe(image => {
+        this.dialogListItem.image = image;
+      });
+    }
+  }
+
+  get navigateLink(): string {
+    let url: string;
+
+    if (Number(this.dialogListItem.room_id) > 0) {
+      url = `room/${this.dialogListItem.room_id}`;
+    } else {
+      url = `${this.dialogListItem.id}`;
+    }
+
+    return url;
   }
 
   get unreadAmount() {
@@ -31,7 +51,11 @@ export class DialogListItemComponent implements OnInit, OnDestroy {
   }
 
   get fullName() {
-    return this.dialogListItem.last_name.trim() + ' ' + this.dialogListItem.first_name.trim();
+    if (+this.dialogListItem.room_id > 0) {
+      return this.dialogListItem.room_name;
+    }
+
+    return this.dialogListItem?.last_name?.trim() + ' ' + this.dialogListItem?.first_name?.trim();
   }
 
   ngOnDestroy() {

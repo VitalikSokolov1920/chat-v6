@@ -9,6 +9,8 @@
   .dialogs__list {
     grid-column: 1;
     &-items {
+      height: 550px;
+      overflow: auto;
       grid-row: 2;
     }
     .dialogs__search-container {

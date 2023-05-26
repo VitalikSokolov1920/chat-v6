@@ -8,6 +8,7 @@ import {CurrentDialogComponent} from "../current-dialog/current-dialog/current-d
 import {FormControl} from "@angular/forms";
 import {debounceTime} from "rxjs";
 import {CreateRoomService} from "../create-room/create-room.service";
+import {RoomService} from "../room.service";
 
 @Component({
   selector: 'app-dialog-list',
@@ -26,6 +27,7 @@ export class DialogListComponent implements OnInit, OnDestroy {
               private dialogService: DialogService,
               private spinner: SpinnerService,
               private createRoomService: CreateRoomService,
+              private roomService: RoomService,
               private authService: AuthenticationService) {
   }
 
@@ -43,6 +45,8 @@ export class DialogListComponent implements OnInit, OnDestroy {
       this.dialogsLoad = true;
 
       this.spinner.hide();
+
+      this.sort();
     });
 
     this.dialogService.waitUserOffline().subscribe((userId) => {
@@ -97,6 +101,18 @@ export class DialogListComponent implements OnInit, OnDestroy {
       this.sort();
     });
 
+    this.roomService.waitChangeLastRoomMessage$().subscribe(message => {
+      if (message) {
+        const item = this.dialogListItems.find(item => item.room_id == message.room_id);
+
+        item.last_message = message.last_message;
+        item.timestamp = message.timestamp;
+        item.unread_messages_amount = message.unread_messages_amount;
+
+        this.sort();
+      }
+    })
+
     this.dialogService.waitMessage$().subscribe((message) => {
       const item = this.dialogListItems.find((item) => item.id == message.send_from_id);
 
@@ -119,9 +135,27 @@ export class DialogListComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.roomService.waitUpdateUnreadRoomMessagesAmount$().subscribe(result => {
+      this.dialogListItems.find(item => item.room_id == result.roomId).unread_messages_amount = result.unreadMessagesAmount;
+    });
+
     this.createRoomService.getLastCreatedRoomId().subscribe(id => {
       if (id) {
+        this.createRoomService.getRoomById(id).subscribe(result => {
+          if (result.actionResult) {
+            const room = result.result;
 
+            const dialogItem: DialogListItem = {
+              room_id: room.room_id,
+              room_name: room.room_name,
+              last_message: room.last_message,
+              unread_messages_amount: room.unread_messages_amount,
+              id: '-1',
+            };
+
+            this.dialogListItems.unshift(dialogItem);
+          }
+        });
       }
     });
   }
@@ -157,9 +191,7 @@ export class DialogListComponent implements OnInit, OnDestroy {
   }
 
   private clear() {
-    this.dialogService.deleteEmptyDialogs().subscribe(() => {
-      console.log('deleted');
-    });
+    this.dialogService.deleteEmptyDialogs().subscribe();
   }
 
   ngOnDestroy() {
