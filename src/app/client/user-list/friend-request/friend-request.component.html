@@ -1,0 +1,31 @@
+<div class="friend-request-container">
+  <div style="width: 50%">
+    <div class="header">Мои заявки в друзья</div>
+    <div class="empty-message" *ngIf="!friendFromMeRequestList || friendFromMeRequestList.length == 0">
+      <img class="empty-message__img" alt="" src="/assets/images/warning.svg">
+      <div class="empty-message__text">Список пуст</div>
+    </div>
+    <div class="friends-request-from-auth">
+      <div *ngFor="let item of friendFromMeRequestList" class="item">
+        <img class="item__img" alt="" [src]="item.image"/>
+        <span class="item__name">{{item.last_name}} {{item.first_name}}</span>
+        <button (click)="cancelFriendRequestFromAuth(item)" class="complete-btn delete-request">Отменить</button>
+      </div>
+    </div>
+  </div>
+  <div style="width: 50%">
+    <div style="grid-row: 1" class="header">Заявки в друзья</div>
+    <div class="empty-message" *ngIf="!friendToMeRequestList || friendToMeRequestList.length == 0">
+      <img class="empty-message__img" alt="" src="/assets/images/warning.svg">
+      <div class="empty-message__text">Список пуст</div>
+    </div>
+    <div class="friends-request-to-auth">
+      <div *ngFor="let item of friendToMeRequestList" class="item">
+        <img class="item__img" alt="" [src]="item.image"/>
+        <span class="item__name">{{item.last_name}} {{item.first_name}}</span>
+        <button (click)="acceptFriendRequest(item)" class="complete-btn accept-request">Принять</button>
+        <button (click)="cancelFriendRequestFromOther(item)" class="complete-btn delete-request">Отклонить</button>
+      </div>
+    </div>
+  </div>
+</div>

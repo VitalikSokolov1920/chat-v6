@@ -1,0 +1,57 @@
+.friend-request-container {
+  display: flex;
+  gap: 10px;
+
+  .friends-request-from-auth, .friends-request-to-auth {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .friends-request-from-auth {
+    grid-column: 1;
+  }
+
+  .friends-request-to-auth {
+    grid-column: 2;
+  }
+
+  .item {
+    width: calc(50% - 10px / 2);
+    background: #FFFFFF;
+    border-radius: 10px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 40px calc(100% / 2 - 30px) calc(100% / 2 - 30px);
+    grid-template-rows: 40px auto;
+    column-gap: 10px;
+    &__img {
+      background: inherit;
+      grid-column: 1;
+      grid-row: 1;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+    &__name {
+      grid-column-start: 2;
+      grid-column-end: 4;
+      grid-row: 1;
+      font-size: 16px;
+      background: inherit;
+    }
+    .delete-request {
+      grid-row: 2;
+      grid-column: 3;
+    }
+    .accept-request {
+      grid-row: 2;
+      grid-column: 2;
+    }
+  }
+}
+
+.header {
+  font-size: 24px;
+  padding-bottom: 20px;
+}
