@@ -267,4 +267,27 @@ export class CurrentRoomComponent implements OnInit, OnDestroy, AfterViewChecked
   getOtherUserSendFrom(send_from_id: string) {
     return this.room.members.find(user => user.id == send_from_id);
   }
+
+  isShowDateSeparator(date1: string, date2: string) {
+    return diffDates(date1, date2);
+  }
+}
+
+export function diffDates(date1: string, date2: string) {
+  if (!date2) {
+    return false;
+  }
+
+  const d1 = new Date(date1);
+  const d2 = new Date(date2);
+
+  if (d1.getFullYear() != d2.getFullYear()) {
+    return true;
+  } else if (d1.getMonth() != d2.getMonth()) {
+    return true
+  } else if (d1.getDate() != d2.getDate()) {
+    return true;
+  }
+
+  return false;
 }

@@ -17,6 +17,7 @@ import {SliceParamsRequest} from "../../../../_models/slice-params";
 import {SpinnerService} from "../../../../spinner/spinner.service";
 import {DOCUMENT} from "@angular/common";
 import {ErrorService} from "../../../../error/error.service";
+import {diffDates} from "../../current-room/current-room/current-room.component";
 
 @Component({
   selector: 'app-current-dialog',
@@ -139,6 +140,10 @@ export class CurrentDialogComponent implements OnInit, OnDestroy, AfterViewCheck
         return item.id == messageId;
       }).is_read = true;
     });
+  }
+
+  isShowDateSeparator(date1: string, date2: string) {
+    return diffDates(date1, date2);
   }
 
   ngAfterViewChecked() {

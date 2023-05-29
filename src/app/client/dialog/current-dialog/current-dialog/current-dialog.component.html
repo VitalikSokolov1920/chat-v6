@@ -7,13 +7,21 @@
 <div class="dialog-container">
   <ng-container *ngIf="dialog">
     <div class="dialog" #scroll (scroll)="scrollTop()">
-      <app-message [id]="message.id" *ngFor="let message of dialog; let i = index"
-                   [message]="message"
-                   (visible)="onMessageVisible($event)"
-                   [messageId]="message.id"
-                   [sendFromUser]="message.send_from_id == authUser.id ? authUser : otherUser"
-                   [isAuthUserSend]="message.send_from_id == authUser.id"
-      ></app-message>
+      <ng-container *ngFor="let message of dialog; let i = index">
+        <div class="date-separator" *ngIf="i == 0">
+          {{message.timestamp | date : 'mediumDate'}}
+        </div>
+        <app-message [id]="message.id"
+                     [message]="message"
+                     (visible)="onMessageVisible($event)"
+                     [messageId]="message.id"
+                     [sendFromUser]="message.send_from_id == authUser.id ? authUser : otherUser"
+                     [isAuthUserSend]="message.send_from_id == authUser.id"
+        ></app-message>
+        <div *ngIf="isShowDateSeparator(message.timestamp, dialog[i+1]?.timestamp)" class="date-separator">
+          {{dialog[i+1]?.timestamp | date : 'mediumDate'}}
+        </div>
+      </ng-container>
     </div>
   </ng-container>
   <div class="send-message">

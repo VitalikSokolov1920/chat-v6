@@ -10,11 +10,20 @@
     <div class="cooperation__btn" *ngIf="isAuthClientPage">
       <app-custom-image-picker (success)="imageLoaded($event)" (error)="imageLoadError($event)"></app-custom-image-picker>
     </div>
-    <div class="cooperation__btn" (click)="addToFriends()" *ngIf="!user.is_friends && !isAuthClientPage">
+    <div class="cooperation__btn" (click)="addToFriends()" *ngIf="!user.is_friends && !user.is_requested_friends_from_auth_user && !user.is_requested_friends_to_auth_user && !isAuthClientPage">
       Добавить в друзья
     </div>
     <div class="cooperation__btn" (click)="removeFromFriends()" *ngIf="user.is_friends && !isAuthClientPage">
       Удалить из друзей
+    </div>
+    <div class="cooperation__btn" (click)="cancelRequestFromFriends(authUser.id, user.id)" *ngIf="!user.is_friends && user.is_requested_friends_from_auth_user && !isAuthClientPage">
+      Отменить запрос в друзья
+    </div>
+    <div class="cooperation__btn" (click)="acceptFriendRequest()" *ngIf="!user.is_friends && user.is_requested_friends_to_auth_user && !isAuthClientPage">
+      Принять запрос в друзья
+    </div>
+    <div class="cooperation__btn" (click)="cancelRequestFromFriends(user.id, authUser.id)" *ngIf="!user.is_friends && user.is_requested_friends_to_auth_user && !isAuthClientPage">
+      Отклонить запрос в друзья
     </div>
   </div>
 </div>

@@ -7,13 +7,21 @@
 <div id="room" class="room-container">
   <ng-container *ngIf="room?.messages && room?.members">
     <div class="room" #scroll (scroll)="scrollTop()">
-      <app-message [id]="message.id" *ngFor="let message of room.messages; let i = index"
-                   [message]="message"
-                   (visible)="onMessageVisible($event)"
-                   [messageId]="message.id"
-                   [sendFromUser]="message.send_from_id == authUser.id ? authUser : getOtherUserSendFrom(message.send_from_id)"
-                   [isAuthUserSend]="message.send_from_id == authUser.id"
-      ></app-message>
+      <ng-container *ngFor="let message of room.messages; let i = index">
+        <div class="date-separator" *ngIf="i == 0">
+          {{message.timestamp | date : 'mediumDate'}}
+        </div>
+        <app-message [id]="message.id"
+                     [message]="message"
+                     (visible)="onMessageVisible($event)"
+                     [messageId]="message.id"
+                     [sendFromUser]="message.send_from_id == authUser.id ? authUser : getOtherUserSendFrom(message.send_from_id)"
+                     [isAuthUserSend]="message.send_from_id == authUser.id"
+        ></app-message>
+        <div *ngIf="isShowDateSeparator(message.timestamp, room.messages[i+1]?.timestamp)" class="date-separator">
+          {{room.messages[i+1]?.timestamp | date : 'mediumDate'}}
+        </div>
+      </ng-container>
     </div>
   </ng-container>
   <div class="send-message">

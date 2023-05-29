@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
-import {Image, UserListItem} from "../../../_models";
+import {Image, User, UserListItem} from "../../../_models";
 import {UserService} from "../../user.service";
 import {map, mergeMap, ReplaySubject, takeUntil} from "rxjs";
 import {AuthenticationService} from "../../../_services/authentication.service";
@@ -16,6 +16,7 @@ import {ErrorService} from "../../../error/error.service";
 export class ClientPageComponent implements OnInit {
   isAuthClientPage: boolean;
   user: UserListItem;
+  authUser: User;
 
   imageControl: FormControl;
 
@@ -30,6 +31,7 @@ export class ClientPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageControl = new FormControl('');
+    this.authUser = this.authService.authUser;
 
     this.activatedRoute.paramMap.pipe(
       takeUntil(this.unsubscribe$),
@@ -86,10 +88,36 @@ export class ClientPageComponent implements OnInit {
     this.router.navigate(['/client/dialogs', this.user.id]);
   }
 
+  cancelRequestFromFriends(requestFrom: string, requestTo: string) {
+    this.userService.cancelFriendRequest$(requestFrom, requestTo).subscribe(result => {
+      if (result.actionResult) {
+        this.user.is_friends = false;
+        this.user.is_requested_friends_from_auth_user = false;
+        this.user.is_requested_friends_to_auth_user = false;
+      } else {
+        this.errorService.show(result.error);
+      }
+    });
+  }
+
+  acceptFriendRequest() {
+    this.userService.applyFriendRequest$(this.user.id, this.authUser.id).subscribe(result => {
+      if (result.actionResult) {
+        this.user.is_friends = true;
+        this.user.is_requested_friends_from_auth_user = false;
+        this.user.is_requested_friends_to_auth_user = false;
+      } else {
+        this.errorService.show(result.error);
+      }
+    });
+  }
+
   addToFriends() {
     this.userService.sendRequestToFriends$(this.user.id).subscribe(result => {
       if (result.actionResult) {
-        this.user.is_friends = true;
+        this.user.is_friends = false;
+        this.user.is_requested_friends_from_auth_user = true;
+        this.user.is_requested_friends_to_auth_user = false;
       } else {
         this.errorService.show(result.error);
       }
@@ -100,6 +128,8 @@ export class ClientPageComponent implements OnInit {
     this.userService.cancelFriendRequest$(this.authService.authUser.id, this.user.id).subscribe(result => {
       if (result.actionResult) {
         this.user.is_friends = false;
+        this.user.is_requested_friends_from_auth_user = false;
+        this.user.is_requested_friends_to_auth_user = false;
       } else {
         this.errorService.show(result.error);
       }

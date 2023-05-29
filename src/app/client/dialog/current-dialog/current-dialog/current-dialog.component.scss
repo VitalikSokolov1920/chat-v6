@@ -39,24 +39,6 @@
   }
 }
 
-.date-separator {
-  position: fixed;
-
-  top: 10px;
-
-  left: 50%;
-
-  transform: translateX(-50%);
-
-  background: $active;
-
-  border-radius: $border-radius-medium;
-
-  font-size: $font-size-small;
-
-  padding: $padding-medium;
-}
-
 .send-message {
   margin: 10px 20px 20px;
 
@@ -73,7 +55,7 @@
 
     resize: none;
 
-    border: 1px solid #F1F1F1;
+    border: 1px solid $base-7;
     border-radius: 2px;
     background-color: #FFFFFF;
   }
