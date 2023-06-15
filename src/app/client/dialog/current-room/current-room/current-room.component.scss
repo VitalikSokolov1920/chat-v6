@@ -1,7 +1,6 @@
 @import "/src/variables";
 
 .room-info {
-  font-size: 14px;
   height: 77px;
   max-width: 100%;
   background-color: #F1F1F1;
@@ -22,7 +21,8 @@
     object-fit: cover;
   }
   &__name {
-    font-size: 16px;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -41,7 +41,7 @@
 .send-message {
   margin: 10px 20px 20px;
 
-  font-size: 14px;
+  //font-size: 14px;
 
   height: 39px;
 

@@ -1,7 +1,8 @@
 <div *ngIf="room" class="room-info">
   <img alt="" [src]="getRoomImage()" class="room-info__image"/>
   <div class="room-info__name">
-    {{room.room_name}}
+    <span>{{room.room_name}}</span>
+    <span>Участников: {{room.roomMembersCount}}</span>
   </div>
 </div>
 <div id="room" class="room-container">
